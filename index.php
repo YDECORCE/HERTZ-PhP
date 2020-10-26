@@ -37,16 +37,8 @@
 <div class="row justify-content-center">
 <button type="submit" class="btn">Réserver un véhicule</button>
 </div>
+<?php
+include 'footer.php';
+?>
 </body>
-<footer>
-    <div class="container-fluid bgfooter">
-        <div class="row align-items-center justify-content-end bgfooter">
-            <div class="col-12 col-lg-3 d-flex align-items-center justify-content-center h-100">
-            <a href="#"><img src="Img/hertz-logo-black.png" alt="logo"> </a>
-            </div>
-            <div class="col-12 col-lg-6">test</div>
-            <div class="col-12 col-lg-3">test</div>
-        </div>
-    </div>
-</footer>
 </html>
