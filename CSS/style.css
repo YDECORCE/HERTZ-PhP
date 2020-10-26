@@ -1,0 +1,19 @@
+/* font-family: 'Roboto', sans-serif;*/
+
+.nav-link {
+    font-family: 'Roboto';
+}
+
+.trait{
+    border-bottom: 10px solid rgb(255,208,4) ;
+}
+.container{
+    min-height: 100vh;;
+}
+.btn{
+    background-color:  rgb(255,208,4);
+}
+.bgfooter{
+    min-height: 20vh;
+    background-color: rgb(204, 202, 202);
+}
