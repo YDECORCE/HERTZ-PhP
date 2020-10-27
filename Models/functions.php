@@ -1,14 +1,17 @@
 <?php
-    
+    function connect()
+    {
         try
         {
-            $bdd = new PDO('mysql:host=localhost;dbname=hertz;port=3308;charset=utf8', 'root', '');
+            $bdd = new PDO('mysql:host=localhost;dbname=hertz;port=3306;charset=utf8', 'root', '');
+            return $bdd;
          
         }
         catch(Exception $e)
         {
             die('Erreur : '.$e->getMessage());
         }
+    }
         
 
 
@@ -19,17 +22,15 @@
     
     function ajouterv()
     {
-
+        $bdd=connect();
         if(isset($_GET['ajouter'])){
-            $ajouter = $bdd->prepare('INSERT INTO véhicules (type_Véhicules, modele_Véhicules, immatriculation_Véhicules) VALUES (:type_Véhicules, :modele_Véhicules, :immatriculation_Véhicules)');
-            $ajouter->bindParam(':type_Véhicules', $_GET['type'], 
-            PDO::PARAM_STR);
-            $ajouter->bindParam(':modele_Véhicules', $_GET['modele'], 
-            PDO::PARAM_STR);
-            $ajouter->bindParam(':immatriculation_Véhicules', $_GET['immat'], 
-            PDO::PARAM_STR);
-            $estceok = $ajouter->execute();
-        
+            $ajouter = $bdd->prepare('INSERT INTO vehicules ( type_Vehicules, modele_Vehicules, immatriculation_Vehicules) 
+            VALUES (:type_Vehicules, :modele_Vehicules, :immatriculation_Vehicules)');
+            $ajouter->bindParam(':type_Vehicules', $_GET['type'],PDO::PARAM_STR);
+            $ajouter->bindParam(':modele_Vehicules', $_GET['modele'],PDO::PARAM_STR);
+            $ajouter->bindParam(':immatriculation_Vehicules', $_GET['immat'],PDO::PARAM_STR);
+            $estceok=$ajouter->execute();
+            
                 if($estceok){
                     echo 'votre enregistrement a été ajouté avec succés';
                     
@@ -37,7 +38,7 @@
                 } else {
                     echo 'Veuillez recommencer svp, une erreur est survenue';
                 }
-            }
+            
 
     }
     // function ajouterc()
@@ -152,22 +153,24 @@
     //             }
     //         }
     // }
-    // function aff_voiture() {
-    //     $recuperation = $bdd->query('SELECT * FROM Livre');
-    //     while ($voit = $recuperation->fetch()) {
-    //     echo "<form><div> <input type='text' name='id' value='".$voit['ID_livre']."'>
-    //     <input type='text' name='titredulivre' value='".$voit['auteur_livre']."'>
-    //     <input type='text' name='annee' value='".$voit['non_du_livre_livre']."'>
-    //     <input type='text' name='auteurdulivre' value='".$voit['annee_livre']."'>
+     function aff_voiture() {
+        $bdd=connect();
+         $recuperation = $bdd->query('SELECT * FROM vehicules');
+         while ($voit = $recuperation->fetch()) {
+         echo "<form><div> <input type='text' name='id' value='".$voit['id_Vehicules']."'>
+        <input type='text' name='titredulivre' value='".$voit['type_Vehicules']."'>
+        <input type='text' name='annee' value='".$voit['modele_Vehicules']."'>
+     <input type='text' name='auteurdulivre' value='".$voit['immatriculation_Vehicules']."'>
         
-    //     <button type='submit' value='modifier2' name='action'>Modifier</button>
-    //     <button type='submit' value='supprimer' name='action'>Supprimer</button>
+         <button type='submit' value='modifier2' name='action'>Modifier</button>
+        <button type='submit' value='supprimer' name='action'>Supprimer</button>
         
-    //     </form>
+         </form>
         
-    //     </div>";
+         </div>";
 
-    // }
+     }
+    }
     // function aff_client() {
     //     $recuperation2 = $bdd->query('SELECT * FROM Livre');
     //     while ($clien = $recuperation2->fetch()) {
@@ -184,4 +187,5 @@
     //     </div>";
 
     // }
+    }
 ?>
