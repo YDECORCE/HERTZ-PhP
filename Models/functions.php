@@ -69,28 +69,32 @@
     //         }
 
     // }
-    // function modifiv() 
-    // {
-
-    //     if(isset($_GET['action']) && $_GET['action']=="modifier"  && !empty($_GET['type_Véhicules'])  && !empty($_GET['modele_Véhicules'])  && !empty($_GET['modele_Véhicules'])){
-    //         $message = '';
-    //         $modifier = $bdd->prepare('UPDATE véhicules SET '.$_GET['colonne'].' = :modif WHERE ID_livre_Livres =:id');
-    //         $modifier->bindParam(':id', $_GET['id'], 
-    //         PDO::PARAM_STR);
-    //         $modifier->bindParam(':modif', $_GET['modif'], 
-    //         PDO::PARAM_STR);
-    //         $modifier = $modifier->execute();
-
-    //             if($modifier){
-    //                 echo 'votre enregistrement a bien été modifié';
+    function modifiv() 
+    {
+        $bdd=connect();
+        if(isset($_GET['action']) && $_GET['action']=="modifier"  && !empty($_GET['id_Vehicules'])  && !empty($_GET['type_Vehicules'])  && !empty($_GET['modele_Vehicules']) && !empty($_GET['immatriculation_Vehicules'])){
+            $message = '';
+            $modifierv2 = $db->prepare('UPDATE vehicules SET id_Vehicules = :id_Vehicules, type_Vehicules = :type_Vehicules, modele_Vehicules = :modele_Vehicules WHERE ID_livre_Livres =:id');
+            $modifierv2->bindParam(':id_Vehicules', $_GET['id_Vehicules'], PDO::PARAM_STR);
+            $modifierv2->bindParam(':type_Vehicules', $_GET['type_Vehicules'], PDO::PARAM_STR);
+            $modifierv2->bindParam(':modele_Vehicules', $_GET['modele_Vehicules'], PDO::PARAM_STR);        
+    
+    
+    
+            
+            $modifierv2 = $modifierv2->execute();
+            // $modifier->debugDumpParams();
+            // die;
+                if($modifierv2){
+                    echo 'votre enregistrement a bien été modifié';
                     
                 
-    //             } else {
-    //                 echo 'Veuillez recommencer svp, une erreur est survenue';
-    //             }
-    //         }
+                } else {
+                    echo 'Veuillez recommencer svp, une erreur est survenue';
+                }
+            }
 
-    // }
+    }
     // function modific() 
     // {
 
@@ -162,7 +166,7 @@
         <input type='text' name='annee' value='".$voit['modele_Vehicules']."'>
      <input type='text' name='auteurdulivre' value='".$voit['immatriculation_Vehicules']."'>
         
-         <button type='submit' value='modifier2' name='action'>Modifier</button>
+         <button type='submit' value='modifier' name='action'>Modifier</button>
         <button type='submit' value='supprimer' name='action'>Supprimer</button>
         
          </form>
