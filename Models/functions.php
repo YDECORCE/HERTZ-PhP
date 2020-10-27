@@ -14,23 +14,41 @@ function conect()
 
 	return $req;
 }
-function ajouter()
+function ajouterv()
 {
 
-    if(isset($_GET['action']) && !empty($_GET[' '])  && !empty($_GET[' '])  && !empty($_GET[' ']) && !empty($_GET[' ']) && !empty($_GET[' ']) && !empty($_GET[' '])){
-        $toto =  $_GET[' '];
-        $ajouter = $bdd->prepare('INSERT INTO $tabl ($cham1, $cham2, $cham3, $cham4, $cham5, $cham6 ) VALUES (:cham1, :cham2, :cham3, :cham4, :cham5, :cham6)');
-        $ajouter->bindParam(':cham1', $_GET[''], 
+    if(isset($_GET['action']) && !empty($_GET['nomdulivre'])  && !empty($_GET['date'])  && !empty($_GET['auteur'])){
+        $toto =  $_GET['date'];
+        $ajouter = $db->prepare('INSERT INTO véhicules (type_Véhicules, modele_Véhicules, annee_livre ) VALUES (:auteur, :titre, :annee)');
+        $ajouter->bindParam(':titre', $_GET['nomdulivre'], 
         PDO::PARAM_STR);
-        $ajouter->bindParam(':cham2', $_GET[''], 
+        $ajouter->bindParam(':annee', $_GET['date'], 
         PDO::PARAM_STR);
-        $ajouter->bindParam(':cham3', $_GET[''], 
+        $ajouter->bindParam(':auteur', $_GET['auteur'], 
         PDO::PARAM_STR);
-        $ajouter->bindParam(':cham4', $_GET[''], 
+        $estceok = $ajouter->execute();
+      
+            if($estceok){
+                echo 'votre enregistrement a été ajouté avec succés';
+                
+            
+            } else {
+                echo 'Veuillez recommencer svp, une erreur est survenue';
+            }
+        }
+
+}
+function ajouterc()
+{
+
+    if(isset($_GET['action']) && !empty($_GET['nomdulivre'])  && !empty($_GET['date'])  && !empty($_GET['auteur'])){
+        $toto =  $_GET['date'];
+        $ajouter = $db->prepare('INSERT INTO livres (auteur_livre, 	non_du_livre_livre, annee_livre ) VALUES (:auteur, :titre, :annee)');
+        $ajouter->bindParam(':titre', $_GET['nomdulivre'], 
         PDO::PARAM_STR);
-        $ajouter->bindParam(':cham5', $_GET[''], 
+        $ajouter->bindParam(':annee', $_GET['date'], 
         PDO::PARAM_STR);
-        $ajouter->bindParam(':cham6', $_GET['auteur'], 
+        $ajouter->bindParam(':auteur', $_GET['auteur'], 
         PDO::PARAM_STR);
         $estceok = $ajouter->execute();
       
