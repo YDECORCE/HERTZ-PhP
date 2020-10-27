@@ -10,10 +10,21 @@
 .container{
     min-height: 100vh;;
 }
-.btn{
+.btn_jaune{
     background-color:  rgb(255,208,4);
 }
 .bgfooter{
     min-height: 20vh;
     background-color: rgb(204, 202, 202);
+}
+.length_crud_veh{
+    width: 20%!important;
+    flex-wrap: wrap;
+
+}
+.bg_entete_tab{
+    background-color: rgb(255,208,4);
+    color: white;
+    font-weight: bolder;
+    text-align: center;
 }
