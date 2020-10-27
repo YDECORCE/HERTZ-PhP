@@ -19,12 +19,12 @@ function ajouterv()
 
     if(isset($_GET['action']) && !empty($_GET['nomdulivre'])  && !empty($_GET['date'])  && !empty($_GET['auteur'])){
         $toto =  $_GET['date'];
-        $ajouter = $db->prepare('INSERT INTO véhicules (type_Véhicules, modele_Véhicules, annee_livre ) VALUES (:auteur, :titre, :annee)');
-        $ajouter->bindParam(':titre', $_GET['nomdulivre'], 
+        $ajouter = $db->prepare('INSERT INTO véhicules (type_Véhicules, modele_Véhicules, immatriculation_Véhicules) VALUES (:type_Véhicules, :modele_Véhicules, :immatriculation_Véhicules)');
+        $ajouter->bindParam(':type_Véhicules', $_GET['type'], 
         PDO::PARAM_STR);
-        $ajouter->bindParam(':annee', $_GET['date'], 
+        $ajouter->bindParam(':modele_Véhicules', $_GET['date'], 
         PDO::PARAM_STR);
-        $ajouter->bindParam(':auteur', $_GET['auteur'], 
+        $ajouter->bindParam(':immatriculation_Véhicules', $_GET['auteur'], 
         PDO::PARAM_STR);
         $estceok = $ajouter->execute();
       
