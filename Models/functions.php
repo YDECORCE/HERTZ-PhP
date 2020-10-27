@@ -17,14 +17,14 @@ function conect()
 function ajouterv()
 {
 
-    if(isset($_GET['action']) && !empty($_GET['nomdulivre'])  && !empty($_GET['date'])  && !empty($_GET['auteur'])){
+    if(isset($_GET['action']) && !empty($_GET['type_Véhicules'])  && !empty($_GET['modele_Véhicules'])  && !empty($_GET['immatriculation_Véhicules'])){
         $toto =  $_GET['date'];
         $ajouter = $db->prepare('INSERT INTO véhicules (type_Véhicules, modele_Véhicules, immatriculation_Véhicules) VALUES (:type_Véhicules, :modele_Véhicules, :immatriculation_Véhicules)');
-        $ajouter->bindParam(':type_Véhicules', $_GET['type'], 
+        $ajouter->bindParam(':type_Véhicules', $_GET['type_Véhicules'], 
         PDO::PARAM_STR);
-        $ajouter->bindParam(':modele_Véhicules', $_GET['date'], 
+        $ajouter->bindParam(':modele_Véhicules', $_GET['modele_Véhicules'], 
         PDO::PARAM_STR);
-        $ajouter->bindParam(':immatriculation_Véhicules', $_GET['auteur'], 
+        $ajouter->bindParam(':immatriculation_Véhicules', $_GET['immatriculation_Véhicules'], 
         PDO::PARAM_STR);
         $estceok = $ajouter->execute();
       
