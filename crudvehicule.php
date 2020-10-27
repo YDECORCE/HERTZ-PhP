@@ -36,12 +36,20 @@
                     <option value="Renault Master 20m3">Renault Master 20m3</option>
                 </select>
                 <input type="text my-5" placeholder="Immatriculation" name="immat" class="form-control"></input><br />
-                <button class="btn btn-primary my-2" type="submit" name="ajouter" value="ajouterv">Ajouter</button>
+                <button class="btn btn_jaune btn-primary my-2" type="submit" name="ajouter" value="ajouterv">Ajouter</button>
             </div>
         </form>
 <?php
 ajouterv();
 echo '<br>';
+?>
+<div class='d-flex'> 
+         <input class='form-control length_crud_veh bg_entete_tab' value='Identifiant Véhicule'>
+         <input class='form-control length_crud_veh bg_entete_tab' value='Type de Véhicule'>
+         <input class='form-control length_crud_veh bg_entete_tab' value='Modèle de Véhicule'>
+         <input class='form-control length_crud_veh bg_entete_tab' value='Immatriculation'>
+         </div>
+         <?php
 aff_voiture();
 ?>
 

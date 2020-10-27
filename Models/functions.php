@@ -32,14 +32,10 @@
             $estceok=$ajouter->execute();
             
                 if($estceok){
-                    echo 'votre enregistrement a été ajouté avec succés';
-                    
-                
+                    echo 'votre enregistrement a été ajouté avec succès <br>';
                 } else {
-                    echo 'Veuillez recommencer svp, une erreur est survenue';
+                    echo 'Veuillez recommencer svp, une erreur est survenue <br>';
                 }
-            
-
     }
     // function ajouterc()
     // {
@@ -156,14 +152,15 @@
      function aff_voiture() {
         $bdd=connect();
          $recuperation = $bdd->query('SELECT * FROM vehicules');
+       
          while ($voit = $recuperation->fetch()) {
-         echo "<form><div> <input type='text' name='id' value='".$voit['id_Vehicules']."'>
-        <input type='text' name='titredulivre' value='".$voit['type_Vehicules']."'>
-        <input type='text' name='annee' value='".$voit['modele_Vehicules']."'>
-     <input type='text' name='auteurdulivre' value='".$voit['immatriculation_Vehicules']."'>
+         echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='id' value='".$voit['id_Vehicules']."'>
+        <input class='form-control length_crud_veh' type='text' name='type' value='".$voit['type_Vehicules']."'>
+        <input class='form-control length_crud_veh' type='text' name='modele' value='".$voit['modele_Vehicules']."'>
+     <input class='form-control length_crud_veh' type='text' name='immat' value='".$voit['immatriculation_Vehicules']."'>
         
-         <button type='submit' value='modifier2' name='action'>Modifier</button>
-        <button type='submit' value='supprimer' name='action'>Supprimer</button>
+         <button class='btn btn_jaune btn-primary' type='submit' value='modifier2' name='action'>Modifier</button>
+        <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>
         
          </form>
         
