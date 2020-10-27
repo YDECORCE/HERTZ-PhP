@@ -41,7 +41,6 @@
         </form>
 <?php
 ajouterv();
-echo '<br>';
 ?>
 <div class='d-flex'> 
          <input class='form-control length_crud_veh bg_entete_tab' value='Identifiant Véhicule'>
@@ -51,6 +50,7 @@ echo '<br>';
          </div>
          <?php
 aff_voiture();
+modifiv();
 ?>
 
     </div>

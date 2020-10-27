@@ -68,16 +68,14 @@
     function modifiv() 
     {
         $bdd=connect();
-        if(isset($_GET['action']) && $_GET['action']=="modifier"  && !empty($_GET['id_Vehicules'])  && !empty($_GET['type_Vehicules'])  && !empty($_GET['modele_Vehicules']) && !empty($_GET['immatriculation_Vehicules'])){
+        if(isset($_GET['action']) && $_GET['action']=="modifier"  && !empty($_GET['id'])  && !empty($_GET['type'])  && !empty($_GET['modele']) && !empty($_GET['immat'])){
             $message = '';
-            $modifierv2 = $db->prepare('UPDATE vehicules SET id_Vehicules = :id_Vehicules, type_Vehicules = :type_Vehicules, modele_Vehicules = :modele_Vehicules WHERE ID_livre_Livres =:id');
-            $modifierv2->bindParam(':id_Vehicules', $_GET['id_Vehicules'], PDO::PARAM_STR);
-            $modifierv2->bindParam(':type_Vehicules', $_GET['type_Vehicules'], PDO::PARAM_STR);
-            $modifierv2->bindParam(':modele_Vehicules', $_GET['modele_Vehicules'], PDO::PARAM_STR);        
-    
-    
-    
-            
+            $modifierv2 = $bdd->prepare('UPDATE vehicules SET id_Vehicules = :id_Vehicules, type_Vehicules = :type_Vehicules, modele_Vehicules = :modele_Vehicules, immatriculation_Vehicules = :immatriculation WHERE id_Vehicules =:id_Vehicules');
+            $modifierv2->bindParam(':id_Vehicules', $_GET['id'], PDO::PARAM_STR);
+            $modifierv2->bindParam(':type_Vehicules', $_GET['type'], PDO::PARAM_STR);
+            $modifierv2->bindParam(':modele_Vehicules', $_GET['modele'], PDO::PARAM_STR);
+            $modifierv2->bindParam(':immatriculation', $_GET['immat'], PDO::PARAM_STR);        
+               
             $modifierv2 = $modifierv2->execute();
             // $modifier->debugDumpParams();
             // die;
@@ -155,7 +153,7 @@
     // }
      function aff_voiture() {
         $bdd=connect();
-         $recuperation = $bdd->query('SELECT * FROM vehicules');
+        $recuperation = $bdd->query('SELECT * FROM vehicules');
        
          while ($voit = $recuperation->fetch()) {
          echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='id' value='".$voit['id_Vehicules']."'>
@@ -163,7 +161,7 @@
         <input class='form-control length_crud_veh' type='text' name='modele' value='".$voit['modele_Vehicules']."'>
      <input class='form-control length_crud_veh' type='text' name='immat' value='".$voit['immatriculation_Vehicules']."'>
         
-         <button class='btn btn_jaune btn-primary' type='submit' value='modifier2' name='action'>Modifier</button>
+         <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
         <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>
         
          </form>
