@@ -20,10 +20,10 @@
   <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Parc Automobile<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="admin.php">Parc Automobile<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Administration Véhicule</a>
+        <a class="nav-link" href="crudvehicule.php">Administration Véhicule</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Administration Clients</a>
