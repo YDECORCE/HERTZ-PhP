@@ -6,6 +6,16 @@
     <title>Hertz - Lons le Saunier</title>
 </head>
 <body>
+
+<?php
+
+require_once('Models/functions.php');
+conect();
+
+var_dump ($bdd);
+ajouterv();
+
+?>
     
 </body>
 </html>
