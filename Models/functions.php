@@ -74,7 +74,7 @@
         $bdd=connect();
         if(isset($_GET['action']) && $_GET['action']=="modifier"  && !empty($_GET['id_Vehicules'])  && !empty($_GET['type_Vehicules'])  && !empty($_GET['modele_Vehicules']) && !empty($_GET['immatriculation_Vehicules'])){
             $message = '';
-            $modifierv2 = $db->prepare('UPDATE vehicules SET id_Vehicules = :id_Vehicules, type_Vehicules = :type_Vehicules, modele_Vehicules = :modele_Vehicules WHERE ID_livre_Livres =:id');
+            $modifierv2 = $db->prepare('UPDATE vehicules SET id_Vehicules = :id_Vehicules, type_Vehicules = :type_Vehicules, modele_Vehicules = :modele_Vehicules WHERE id_Vehicules =:id');
             $modifierv2->bindParam(':id_Vehicules', $_GET['id_Vehicules'], PDO::PARAM_STR);
             $modifierv2->bindParam(':type_Vehicules', $_GET['type_Vehicules'], PDO::PARAM_STR);
             $modifierv2->bindParam(':modele_Vehicules', $_GET['modele_Vehicules'], PDO::PARAM_STR);        
@@ -117,26 +117,26 @@
     //         }
 
     // }
-    // function supriv()
-    // {
-
-    //     if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['	id_Véhicules'])){
+    function supriv()
+    {
+        $bdd=connect();
+        if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['	id_Véhicules'])){
             
-    //         $supprimer = $bdd->prepare('DELETE FROM véhicules WHERE id_Véhicules =:id_Véhicule');
-    //         $supprimer->bindParam(':id_Véhicules', $_GET['id_Véhicules'], 
-    //         PDO::PARAM_STR);
+            $supprimer = $bdd->prepare('DELETE FROM véhicules WHERE id_Véhicules =:id_Véhicule');
+            $supprimer->bindParam(':id_Véhicules', $_GET['id_Véhicules'], 
+            PDO::PARAM_STR);
 
 
-    //         $supprimer = $supprimer->execute();
-    //             if($supprimer){
-    //                 echo 'votre enregistrement a bien été supprimé';
+            $supprimer = $supprimer->execute();
+                if($supprimer){
+                    echo 'votre enregistrement a bien été supprimé';
                     
                 
-    //             } else {
-    //                 echo 'Veuillez recommencer svp, une erreur est survenue';
-    //             }
-    //         }
-    // }
+                } else {
+                    echo 'Veuillez indiquer l\'identifien du véhicule et recommencer svp, une erreur est survenue';
+                }
+            }
+    }
     // function supric()
     // {
 
