@@ -20,7 +20,7 @@
     
     function ajouterv()
     {
-        $bdd=conect()
+        $bdd=conect();
         if(isset($_GET['ajouter'])){
             $ajouter = $bdd->prepare('INSERT INTO véhicules (type_Véhicules, modele_Véhicules, immatriculation_Véhicules) VALUES (:type_Véhicules, :modele_Véhicules, :immatriculation_Véhicules)');
             $ajouter->bindParam(':type_Véhicules', $_GET['type'],PDO::PARAM_STR);
@@ -110,26 +110,25 @@
     //         }
 
     // }
-    // function supriv()
-    // {
+    function supriv()
+    {
 
-    //     if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['	id_Véhicules'])){
+        if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['	id_Véhicules'])){
             
-    //         $supprimer = $bdd->prepare('DELETE FROM véhicules WHERE id_Véhicules =:id_Véhicule');
-    //         $supprimer->bindParam(':id_Véhicules', $_GET['id_Véhicules'], 
-    //         PDO::PARAM_STR);
+            $supprimer = $bdd->prepare('DELETE FROM véhicules WHERE id_Véhicules =:id_Véhicule');
+            $supprimer->bindParam(':id_Véhicules', $_GET['id_Véhicules'],PDO::PARAM_STR);
 
 
-    //         $supprimer = $supprimer->execute();
-    //             if($supprimer){
-    //                 echo 'votre enregistrement a bien été supprimé';
+            $supprimer = $supprimer->execute();
+                if($supprimer){
+                    echo 'votre enregistrement a bien été supprimé';
                     
                 
-    //             } else {
-    //                 echo 'Veuillez recommencer svp, une erreur est survenue';
-    //             }
-    //         }
-    // }
+                } else {
+                    echo 'Veuillez recommencer svp, une erreur est survenue';
+                }
+            }
+    }
     // function supric()
     // {
 
