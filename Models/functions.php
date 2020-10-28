@@ -23,7 +23,8 @@
     function ajouterv()
     {
         $bdd=connect();
-        if(isset($_GET['ajouter'])){
+        if(isset($_GET['ajouter']))
+        {
             $ajouter = $bdd->prepare('INSERT INTO vehicules ( type_Vehicules, modele_Vehicules, immatriculation_Vehicules) 
             VALUES (:type_Vehicules, :modele_Vehicules, :immatriculation_Vehicules)');
             $ajouter->bindParam(':type_Vehicules', $_GET['type'],PDO::PARAM_STR);
@@ -31,11 +32,15 @@
             $ajouter->bindParam(':immatriculation_Vehicules', $_GET['immat'],PDO::PARAM_STR);
             $estceok=$ajouter->execute();
             
-                if($estceok){
+                if($estceok)
+                {
                     echo 'votre enregistrement a été ajouté avec succès <br>';
-                } else {
+                } 
+                else 
+                {
                     echo 'Veuillez recommencer svp, une erreur est survenue <br>';
                 }
+            }
     }
 }
     function ajouterc()
@@ -57,10 +62,35 @@
                 }
     }
     }
+    function ajouterl()
+    {
+        $bdd=connect();
+        if(isset($_GET['ajouter']))
+        {
+            $ajouter = $bdd->prepare('INSERT INTO louer ( id_Clients, id_Véhicules, date_fin_Louer, retour_Louer, date_debut_Louer) 
+            VALUES (:id_Clients, :id_Vehicules, :date_fin_Louer, :retour_Louer, :date_debut_Louer)');
+            $ajouter->bindParam(':id_Clients', $_GET['idc'],PDO::PARAM_STR);
+            $ajouter->bindParam(':modele_Vehicules', $_GET['idv'],PDO::PARAM_STR);
+            $ajouter->bindParam(':date_fin_Louer', $_GET['fin'],PDO::PARAM_STR);
+            $ajouter->bindParam(':retour_Louer', $_GET['retour'],PDO::PARAM_STR);
+            $ajouter->bindParam(':date_debut_Louer', $_GET['debut'],PDO::PARAM_STR);
+            $estceok=$ajouter->execute();
+            
+                if($estceok)
+                {
+                    echo 'votre enregistrement a été ajouté avec succès <br>';
+                } 
+                else 
+                {
+                    echo 'Veuillez recommencer svp, une erreur est survenue <br>';
+                }
+            }
+    }
     function modifiv() 
     {
         $bdd=connect();
-        if(isset($_GET['action']) && $_GET['action']=="modifier"  && !empty($_GET['id'])  && !empty($_GET['type'])  && !empty($_GET['modele']) && !empty($_GET['immat'])){
+        if(isset($_GET['action']) && $_GET['action']=="modifier"  && !empty($_GET['id'])  && !empty($_GET['type'])  && !empty($_GET['modele']) && !empty($_GET['immat']))
+        {
             $message = '';
             $modifierv2 = $bdd->prepare('UPDATE vehicules SET id_Vehicules = :id_Vehicules, type_Vehicules = :type_Vehicules, modele_Vehicules = :modele_Vehicules, immatriculation_Vehicules = :immatriculation WHERE id_Vehicules =:id_Vehicules');
             $modifierv2->bindParam(':id_Vehicules', $_GET['id'], PDO::PARAM_STR);
@@ -71,14 +101,15 @@
             $modifierv2 = $modifierv2->execute();
             // $modifier->debugDumpParams();
             // die;
-                if($modifierv2){
+                if($modifierv2)
+                {
                     echo 'votre enregistrement a bien été modifié';
-                                                        
-                
-                } else {
+                } 
+                else 
+                {
                     echo 'Veuillez recommencer svp, une erreur est survenue';
                 }
-            }
+        }
 
     }
     function modific() 
@@ -98,12 +129,12 @@
             
                 if($modifierc2){
                     echo 'votre enregistrement a bien été modifié';
-                    
-                
-                } else {
+                } 
+                else 
+                {
                     echo 'Veuillez recommencer svp, une erreur est survenue';
                 }
-            }
+        }
 
     }
     function supriv()
@@ -116,11 +147,12 @@
 
 
             $supprimer = $supprimer->execute();
-                if($supprimer){
+                if($supprimer)
+                {
                     echo 'votre enregistrement a bien été supprimé';
-                    
-                
-                } else {
+                } 
+                else 
+                {
                     echo 'Veuillez recommencer svp, une erreur est survenue';
                 }
             }
@@ -128,40 +160,45 @@
     function supric()
     {
         $bdd=connect();
-        if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['id'])){
+        if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['id']))
+        {
             
             $supprimer2 = $bdd->prepare('DELETE FROM clients WHERE id_Clients =:id_Clients');
             $supprimer2->bindParam(':id_Clients', $_GET['id'],PDO::PARAM_STR);
 
 
             $supprimer2 = $supprimer2->execute();
-                if($supprimer2){
+                if($supprimer2)
+                {
                     echo 'votre enregistrement a bien été supprimé';
                     
                 
-                } else {
+                } else
+                {
                     echo 'Veuillez recommencer svp, une erreur est survenue';
                 }
-            }
+        }
     }
-     function aff_voiture() {
+     function aff_voiture() 
+    {
         $bdd=connect();
         $recuperation = $bdd->query('SELECT * FROM vehicules');
        
-         while ($voit = $recuperation->fetch()) {
-         echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='id' value='".$voit['id_Vehicules']."'>
-        <input class='form-control length_crud_veh' type='text' name='type' value='".$voit['type_Vehicules']."'>
-        <input class='form-control length_crud_veh' type='text' name='modele' value='".$voit['modele_Vehicules']."'>
-     <input class='form-control length_crud_veh' type='text' name='immat' value='".$voit['immatriculation_Vehicules']."'>
-        
-         <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
-        <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>
-        
-         </form>
-        
-         </div>";
+         while ($voit = $recuperation->fetch()) 
+        {
+            echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='id' value='".$voit['id_Vehicules']."'>
+            <input class='form-control length_crud_veh' type='text' name='type' value='".$voit['type_Vehicules']."'>
+            <input class='form-control length_crud_veh' type='text' name='modele' value='".$voit['modele_Vehicules']."'>
+            <input class='form-control length_crud_veh' type='text' name='immat' value='".$voit['immatriculation_Vehicules']."'>
+            
+            <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
+            <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>
+            
+            </form>
+            
+            </div>";
 
-     }
+        }
     }
     function aff_client() {
         $bdd=connect();
@@ -182,7 +219,28 @@
         
          </div>";
 
-     }
+        }
+    }
+    function aff_louer() 
+    {
+        $bdd=connect();
+        $recuperation = $bdd->query('SELECT * FROM louer');
+        while($louer = $recuperation->fetch())
+        {
+            echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='idc' value='".$louer['id_Clients']."'>
+            <input class='form-control length_crud_veh' type='text' name='idv' value='".$louer['id_Véhicules']."'>
+            <input class='form-control length_crud_veh' type='text' name='fin' value='".$louer['date_fin_Louer']."'>
+            <input class='form-control length_crud_veh' type='checkbox' name='retour' value='".$louer['retour_Louer']."'>
+            <input class='form-control length_crud_veh' type='text' name='debut' value='".$louer['date_debut_Louer']."'>
+            
+            <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
+            <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>alexa
+            
+            </form>
+            
+            </div>";
+
+        }
     }
     
     function refresh_pages($url){
