@@ -26,7 +26,7 @@
         <a class="nav-link" href="crudvehicule.php">Administration Véhicule</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Administration Clients</a>
+        <a class="nav-link" href="crudclients.php">Administration Clients</a>
       </li>
     </ul>
   </div>
