@@ -81,7 +81,7 @@
             // die;
                 if($modifierv2){
                     echo 'votre enregistrement a bien été modifié';
-                                       
+                                                        
                 
                 } else {
                     echo 'Veuillez recommencer svp, une erreur est survenue';
@@ -186,5 +186,9 @@
     //     </div>";
 
     // }
+    }
+    function refresh_pages($url){
+    $delai=1; 
+    header("Refresh: $delai;url=$url");
     }
 ?>

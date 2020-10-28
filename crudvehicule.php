@@ -27,13 +27,13 @@
                 </select>
                 <select class="custom-select my-2" name="modele">
                     <option selected>Choisir le modèle de véhicule</option>
-                    <option value="fiat 500">Fiat 500</option>
+                    <option value="Fiat 500">Fiat 500</option>
                     <option value="Renault Clio">Renault Clio</option>
                     <option value="Peugeot 308">Peugeot 308</option>
                     <option value="Renault Scénic">Renault Scénic</option>
                     <option value="Peugeot 5008">Peugeot 5008</option>
                     <option value="Peugeot expert 12m3">Peugeot expert 12m3</option>
-                    <option value="Renault Master 20m3">Renault Master 20m3</option>
+                    <option value="Iveco daily 20m3">Iveco Daily 20m3</option>
                 </select>
                 <input type="text my-5" placeholder="Immatriculation" name="immat" class="form-control"></input><br />
                 <button class="btn btn_jaune btn-primary my-2" type="submit" name="ajouter" value="ajouterv">Ajouter</button>
