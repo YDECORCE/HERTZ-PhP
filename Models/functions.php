@@ -37,11 +37,11 @@
                     echo 'Veuillez recommencer svp, une erreur est survenue <br>';
                 }
     }
+}
     function ajouterc()
     {
         $bdd=connect();
-        if(isset($_GET['action']) && !empty($_GET['nom'])  && !empty($_GET['prenom'])  && !empty($_GET['adresse']) && !empty($_GET['cp']) && !empty($_GET['ville'])){
-            $toto =  $_GET['date'];
+        if(isset($_GET['ajouter'])&& !empty($_GET['nom'])  && !empty($_GET['prenom'])  && !empty($_GET['adresse']) && !empty($_GET['cp']) && !empty($_GET['ville'])) {
             $ajouter2 = $bdd->prepare('INSERT INTO clients (Nom_Clients, Prenom_Clients, adresse_Clients, CP_Clients, Ville_Clients  ) VALUES (:Nom_Clients, :Prenom_Clients, :adresse_Clients, :CP_Clients, :Ville_Clients)');
             $ajouter2->bindParam(':Nom_Clients', $_GET['nom'],PDO::PARAM_STR);
             $ajouter2->bindParam(':Prenom_Clients', $_GET['prenom'],PDO::PARAM_STR);
@@ -55,6 +55,7 @@
                 } else {
                     echo 'Veuillez recommencer svp, une erreur est survenue <br>';
                 }
+    }
     }
     function modifiv() 
     {
@@ -83,18 +84,19 @@
     function modific() 
     {
         $bdd=connect();
-        if(isset($_GET['action']) && $_GET['action']=="modifier"  && !empty($_GET['id'])  && !empty($_GET['nom'])  && !empty($_GET[''])){
-            $message = '';
-            $modifierc2 = $bdd->prepare('UPDATE clients SET id_Clients = :id_Clients, Nom_Clients = :Nom_Clients, Prenom_Clients = :Prenom_Clients, adresse_Clients = :adresse_Clients, CP_Clients = :CP_Clients, Ville_Clients = :Ville_Clients, WHERE id_Clients =:id_Clients');
-            $modifierc2->bindParam(':id_Clients', $_GET['id'],PDO::PARAM_STR);
+       
+            if(isset($_GET['action']) && $_GET['action']=="modifier"  && !empty($_GET['id'])  && !empty($_GET['nom'])  && !empty($_GET['prenom'])&& !empty($_GET['adresse'])&& !empty($_GET['cp'])&& !empty($_GET['ville'])){
+            
+            $modifierc2 = $bdd->prepare('UPDATE clients SET id_Clients = :id_Clients, Nom_Clients = :Nom_Clients, Prenom_Clients = :Prenom_Clients, adresse_Clients = :adresse_Clients, CP_Clients = :CP_Clients, Ville_Clients = :Ville_Clients WHERE id_Clients =:id_Clients');
+            $modifierc2->bindParam(':id_Clients', $_GET['id'],PDO::PARAM_INT);
             $modifierc2->bindParam(':Nom_Clients', $_GET['nom'],PDO::PARAM_STR);
             $modifierc2->bindParam(':Prenom_Clients', $_GET['prenom'],PDO::PARAM_STR);
             $modifierc2->bindParam(':adresse_Clients', $_GET['adresse'],PDO::PARAM_STR);
-            $modifierc2->bindParam(':CP_Clients', $_GET['cp'],PDO::PARAM_STR);
+            $modifierc2->bindParam(':CP_Clients', $_GET['cp'],PDO::PARAM_INT);
             $modifierc2->bindParam(':Ville_Clients', $_GET['ville'],PDO::PARAM_STR);
-            $modifierc2 = $modifier2->execute();
-
-                if($modifier2){
+            $modifierc2 = $modifierc2->execute();
+            
+                if($modifierc2){
                     echo 'votre enregistrement a bien été modifié';
                     
                 
@@ -166,12 +168,12 @@
         $recuperation = $bdd->query('SELECT * FROM clients');
        
          while ($client = $recuperation->fetch()) {
-         echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='id' value='".$client['id_Clients']."'>
-        <input class='form-control length_crud_veh' type='text' name='nom' value='".$client['Nom_Clients']."'>
-        <input class='form-control length_crud_veh' type='text' name='prenom' value='".$client['Prenom_Clients']."'>
-        <input class='form-control length_crud_veh' type='text' name='adresse' value='".$client['adresse_Clients']."'>
-        <input class='form-control length_crud_veh' type='text' name='cp' value='".$client['CP_Clients']."'>
-        <input class='form-control length_crud_veh' type='text' name='ville' value='".$client['Ville_Clients']."'>
+         echo "<form><div class='d-flex'> <input class='form-control length_crud_Cl' style='width:5%' type='text' name='id' value='".$client['id_Clients']."'>
+        <input class='form-control length_crud_Cl' style='width:14%' type='text' name='nom' value='".$client['Nom_Clients']."'>
+        <input class='form-control length_crud_Cl' style='width:14%' type='text' name='prenom' value='".$client['Prenom_Clients']."'>
+        <input class='form-control length_crud_Cl' style='width:20%' type='text' name='adresse' value='".$client['adresse_Clients']."'>
+        <input class='form-control length_crud_Cl' style='width:7%' type='text' name='cp' value='".$client['CP_Clients']."'>
+        <input class='form-control length_crud_Cl' style='width:20%' type='text' name='ville' value='".$client['Ville_Clients']."'>
         
          <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
         <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>
@@ -182,9 +184,32 @@
 
      }
     }
-    }
+    
     function refresh_pages($url){
     $delai=1; 
     header("Refresh: $delai;url=$url");
     }
+
+
+function liste_déroulante_client(){
+    $bdd=connect();
+    $reponse = $bdd->query('SELECT * FROM clients');
+    echo'<select class="custom-select my-2" name="client">';
+    echo'<option value="NULL">Choisir le client</option>';
+    while ($donnees = $reponse->fetch()) {
+        echo'<option value='.$donnees['id_Clients'].'>'.$donnees['id_Clients'].' '.$donnees['Prenom_Clients'].' '.$donnees['Nom_Clients'].' '.$donnees['CP_Clients'].' '.$donnees['Ville_Clients'].' </option>';
+    }
+    echo'</select>';
+    }
+
+    function liste_déroulante_vehicule(){
+        $bdd=connect();
+        $reponse = $bdd->query('SELECT * FROM vehicules');
+        echo'<select class="custom-select my-2" name="vehicule">';
+        echo'<option value="NULL">Choisir le véhicule</option>';
+        while ($donnees = $reponse->fetch()) {
+            echo'<option value='.$donnees['id_Vehicules'].'>'.$donnees['id_Vehicules'].' / '.$donnees['type_Vehicules'].' / '.$donnees['modele_Vehicules'].' / '.$donnees['immatriculation_Vehicules'].' </option>';
+        }
+        echo'</select>';
+        }
 ?>

@@ -23,6 +23,9 @@
         <a class="nav-link" href="admin.php">Parc Automobile<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="locations.php">Gestion locations</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="crudvehicule.php">Administration Véhicule</a>
       </li>
       <li class="nav-item">

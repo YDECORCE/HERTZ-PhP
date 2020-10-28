@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -18,7 +18,7 @@
    ?>
     <div class="container pt-5">
         <h2>Ajout d'un nouveau client</h2>
-        <form name="ajoutvehicule" method="get" action="crudvehicule.php">
+        <form name="ajoutclient" method="get" action="crudclients.php">
             <div class="form-group">
                 <input type="text my-5" placeholder="Nom" name="nom" class="form-control"></input><br />
                 <input type="text my-5" placeholder="Prénom" name="prenom" class="form-control"></input><br />
@@ -26,26 +26,28 @@
                 <input type="text my-5" placeholder="Code postal" name="cp" class="form-control"></input><br />
                 <input type="text my-5" placeholder="Ville" name="ville" class="form-control"></input><br />
                 <button class="btn btn_jaune btn-primary my-2" type="submit" name="ajouter"
-                    value="ajouterc">Ajouter</button>
+                    value="ajoutc">Ajouter</button>
             </div>
         </form>
-        <!-- <?php
-// ajouterc();
-?> -->
-        <div class='d-flex'>
-            <input class='form-control length_crud_Cl bg_entete_tab' style='width:5%' value='Id'>
-            <input class='form-control length_crud_Cl bg_entete_tab' style='width:14%' value='Nom'>
-            <input class='form-control length_crud_Cl bg_entete_tab' style='width:14%' value='Prénom'>
-            <input class='form-control length_crud_Cl bg_entete_tab' style='width:27%' value='Adresse'>
-            <input class='form-control length_crud_Cl bg_entete_tab' style='width:7%' value='CP'>
-            <input class='form-control length_crud_Cl bg_entete_tab' style='width:13%' value='Ville'>
-        </div>
-        <?php
-
-
-?>
-
+        
+    
+    <div class="d-flex">
+        <input class='form-control length_crud_Cl bg_entete_tab' style='width:5%' value='Id'>
+        <input class='form-control length_crud_Cl bg_entete_tab' style='width:14%' value='Nom'>
+        <input class='form-control length_crud_Cl bg_entete_tab' style='width:14%' value='Prénom'>
+        <input class='form-control length_crud_Cl bg_entete_tab' style='width:20%' value='Adresse'>
+        <input class='form-control length_crud_Cl bg_entete_tab' style='width:7%' value='CP'>
+        <input class='form-control length_crud_Cl bg_entete_tab' style='width:20%' value='Ville'>
     </div>
+
+    <?php
+ajouterc();
+aff_client();
+modific();
+supric()
+?>
+</div>
+
     <?php
 include 'footer.php';
 ?>
