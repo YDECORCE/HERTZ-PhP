@@ -96,9 +96,9 @@
             $modifierc2->bindParam(':adresse_Clients', $_GET['adresse'],PDO::PARAM_STR);
             $modifierc2->bindParam(':CP_Clients', $_GET['cp'],PDO::PARAM_STR);
             $modifierc2->bindParam(':Ville_Clients', $_GET['ville'],PDO::PARAM_STR);
-            $modifierc2 = $modifier2->execute();
+            $modifierc2 = $modifierc2->execute();
 
-                if($modifier2){
+                if($modifierc2){
                     echo 'votre enregistrement a bien été modifié';
                     
                 
