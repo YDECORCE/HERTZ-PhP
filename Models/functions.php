@@ -112,7 +112,7 @@
     // }
     function supriv()
     {
-
+        $bdd=conect();
         if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['	id_Véhicules'])){
             
             $supprimer = $bdd->prepare('DELETE FROM véhicules WHERE id_Véhicules =:id_Véhicule');
