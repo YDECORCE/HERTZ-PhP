@@ -32,14 +32,10 @@
             $estceok=$ajouter->execute();
             
                 if($estceok){
-                    echo 'votre enregistrement a été ajouté avec succés';
-                    
-                
+                    echo 'votre enregistrement a été ajouté avec succès <br>';
                 } else {
-                    echo 'Veuillez recommencer svp, une erreur est survenue';
+                    echo 'Veuillez recommencer svp, une erreur est survenue <br>';
                 }
-            
-
     }
     // function ajouterc()
     // {
@@ -72,22 +68,20 @@
     function modifiv() 
     {
         $bdd=connect();
-        if(isset($_GET['action']) && $_GET['action']=="modifier"  && !empty($_GET['id_Vehicules'])  && !empty($_GET['type_Vehicules'])  && !empty($_GET['modele_Vehicules']) && !empty($_GET['immatriculation_Vehicules'])){
+        if(isset($_GET['action']) && $_GET['action']=="modifier"  && !empty($_GET['id'])  && !empty($_GET['type'])  && !empty($_GET['modele']) && !empty($_GET['immat'])){
             $message = '';
-            $modifierv2 = $db->prepare('UPDATE vehicules SET id_Vehicules = :id_Vehicules, type_Vehicules = :type_Vehicules, modele_Vehicules = :modele_Vehicules WHERE id_Vehicules =:id');
-            $modifierv2->bindParam(':id_Vehicules', $_GET['id_Vehicules'], PDO::PARAM_STR);
-            $modifierv2->bindParam(':type_Vehicules', $_GET['type_Vehicules'], PDO::PARAM_STR);
-            $modifierv2->bindParam(':modele_Vehicules', $_GET['modele_Vehicules'], PDO::PARAM_STR);        
-    
-    
-    
-            
+            $modifierv2 = $bdd->prepare('UPDATE vehicules SET id_Vehicules = :id_Vehicules, type_Vehicules = :type_Vehicules, modele_Vehicules = :modele_Vehicules, immatriculation_Vehicules = :immatriculation WHERE id_Vehicules =:id_Vehicules');
+            $modifierv2->bindParam(':id_Vehicules', $_GET['id'], PDO::PARAM_STR);
+            $modifierv2->bindParam(':type_Vehicules', $_GET['type'], PDO::PARAM_STR);
+            $modifierv2->bindParam(':modele_Vehicules', $_GET['modele'], PDO::PARAM_STR);
+            $modifierv2->bindParam(':immatriculation', $_GET['immat'], PDO::PARAM_STR);        
+               
             $modifierv2 = $modifierv2->execute();
             // $modifier->debugDumpParams();
             // die;
                 if($modifierv2){
                     echo 'votre enregistrement a bien été modifié';
-                    
+                                                        
                 
                 } else {
                     echo 'Veuillez recommencer svp, une erreur est survenue';
@@ -120,11 +114,10 @@
     function supriv()
     {
         $bdd=connect();
-        if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['	id_Véhicules'])){
+        if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['id'])){
             
-            $supprimer = $bdd->prepare('DELETE FROM véhicules WHERE id_Véhicules =:id_Véhicule');
-            $supprimer->bindParam(':id_Véhicules', $_GET['id_Véhicules'], 
-            PDO::PARAM_STR);
+            $supprimer = $bdd->prepare('DELETE FROM vehicules WHERE id_Vehicules =:id_Vehicule');
+            $supprimer->bindParam(':id_Vehicule', $_GET['id'],PDO::PARAM_STR);
 
 
             $supprimer = $supprimer->execute();
@@ -133,7 +126,7 @@
                     
                 
                 } else {
-                    echo 'Veuillez indiquer l\'identifien du véhicule et recommencer svp, une erreur est survenue';
+                    echo 'Veuillez recommencer svp, une erreur est survenue';
                 }
             }
     }
@@ -159,15 +152,16 @@
     // }
      function aff_voiture() {
         $bdd=connect();
-         $recuperation = $bdd->query('SELECT * FROM vehicules');
+        $recuperation = $bdd->query('SELECT * FROM vehicules');
+       
          while ($voit = $recuperation->fetch()) {
-         echo "<form><div> <input type='text' name='id' value='".$voit['id_Vehicules']."'>
-        <input type='text' name='titredulivre' value='".$voit['type_Vehicules']."'>
-        <input type='text' name='annee' value='".$voit['modele_Vehicules']."'>
-     <input type='text' name='auteurdulivre' value='".$voit['immatriculation_Vehicules']."'>
+         echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='id' value='".$voit['id_Vehicules']."'>
+        <input class='form-control length_crud_veh' type='text' name='type' value='".$voit['type_Vehicules']."'>
+        <input class='form-control length_crud_veh' type='text' name='modele' value='".$voit['modele_Vehicules']."'>
+     <input class='form-control length_crud_veh' type='text' name='immat' value='".$voit['immatriculation_Vehicules']."'>
         
-         <button type='submit' value='modifier' name='action'>Modifier</button>
-        <button type='submit' value='supprimer' name='action'>Supprimer</button>
+         <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
+        <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>
         
          </form>
         
@@ -191,5 +185,9 @@
     //     </div>";
 
     // }
+    }
+    function refresh_pages($url){
+    $delai=1; 
+    header("Refresh: $delai;url=$url");
     }
 ?>

@@ -35,7 +35,7 @@
 </div>
 </section>
 <div class="row justify-content-center">
-<button type="submit" class="btn">Réserver un véhicule</button>
+<button type="submit" class="btn btn_jaune">Réserver un véhicule</button>
 </div>
 <?php
 include 'footer.php';
