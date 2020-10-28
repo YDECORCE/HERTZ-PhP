@@ -21,6 +21,7 @@
     function ajouterv()
     {
         $bdd=conect();
+
         if(isset($_GET['ajouter'])){
             $ajouter = $bdd->prepare('INSERT INTO véhicules (type_Véhicules, modele_Véhicules, immatriculation_Véhicules) VALUES (:type_Véhicules, :modele_Véhicules, :immatriculation_Véhicules)');
             $ajouter->bindParam(':type_Véhicules', $_GET['type'],PDO::PARAM_STR);
@@ -113,10 +114,10 @@
     function supriv()
     {
         $bdd=conect();
-        if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['	id_Véhicules'])){
+        if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['	id'])){
             
-            $supprimer = $bdd->prepare('DELETE FROM véhicules WHERE id_Véhicules =:id_Véhicule');
-            $supprimer->bindParam(':id_Véhicules', $_GET['id_Véhicules'],PDO::PARAM_STR);
+            $supprimer = $bdd->prepare('DELETE FROM vehicules WHERE id_Vehicules =:id_Vehicule');
+            $supprimer->bindParam(':id_Vehicules', $_GET['id'],PDO::PARAM_STR);
 
 
             $supprimer = $supprimer->execute();
@@ -150,6 +151,7 @@
     //         }
     // }
     function aff_voiture() {
+        $bdd=conect();
         $recuperation = $bdd->query('SELECT * FROM Livre');
         while ($voit = $recuperation->fetch()) {
         echo "<form><div> <input type='text' name='id' value='".$voit['ID_livre']."'>
@@ -180,5 +182,5 @@
         
     //     </div>";
 
-    // }
+//}
 ?>
