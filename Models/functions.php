@@ -18,7 +18,7 @@
         
 
         
-   
+    }
     
     function ajouterv()
     {
@@ -111,26 +111,25 @@
     //         }
 
     // }
-    // function supriv()
-    // {
-
-    //     if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['	id_Véhicules'])){
+    function supriv()
+    {
+        $bdd=connect();
+        if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['	id_Véhicules'])){
             
-    //         $supprimer = $bdd->prepare('DELETE FROM véhicules WHERE id_Véhicules =:id_Véhicule');
-    //         $supprimer->bindParam(':id_Véhicules', $_GET['id_Véhicules'], 
-    //         PDO::PARAM_STR);
+            $supprimer = $bdd->prepare('DELETE FROM véhicules WHERE id_Véhicules =:id_Véhicule');
+            $supprimer->bindParam(':id_Véhicules', $_GET['id_Véhicules'],PDO::PARAM_STR);
 
 
-    //         $supprimer = $supprimer->execute();
-    //             if($supprimer){
-    //                 echo 'votre enregistrement a bien été supprimé';
+            $supprimer = $supprimer->execute();
+                if($supprimer){
+                    echo 'votre enregistrement a bien été supprimé';
                     
                 
-    //             } else {
-    //                 echo 'Veuillez recommencer svp, une erreur est survenue';
-    //             }
-    //         }
-    // }
+                } else {
+                    echo 'Veuillez recommencer svp, une erreur est survenue';
+                }
+            }
+    }
     // function supric()
     // {
 
