@@ -39,34 +39,34 @@
             }
 
     }
-    // function ajouterc()
-    // {
+    function ajouterc()
+    {
 
-    //     if(isset($_GET['action']) && !empty($_GET['Nom_Clients'])  && !empty($_GET['Prenom_Clients'])  && !empty($_GET['adresse_Clients']) && !empty($_GET['CP_Clients']) && !empty($_GET['Ville_Clients'])){
-    //         $toto =  $_GET['date'];
-    //         $ajouter2 = $bdd->prepare('INSERT INTO clients (Nom_Clients, Prenom_Clients, adresse_Clients, CP_Clients, Ville_Clients  ) VALUES (:Nom_Clients, :Prenom_Clients, :adresse_Clients, :CP_Clients, :Ville_Clients)');
-    //         $ajouter2->bindParam(':Nom_Clients', $_GET['Nom_Clients'], 
-    //         PDO::PARAM_STR);
-    //         $ajouter2->bindParam(':Prenom_Clients', $_GET['Prenom_Clients'], 
-    //         PDO::PARAM_STR);
-    //         $ajouter2->bindParam(':adresse_Clients', $_GET['adresse_Clients'], 
-    //         PDO::PARAM_STR);
-    //         $ajouter2->bindParam(':CP_Clients', $_GET['CP_Clients'], 
-    //         PDO::PARAM_STR);
-    //         $ajouter2->bindParam(':Ville_Clients', $_GET['Ville_Clients'], 
-    //         PDO::PARAM_STR);
-    //         $estceok = $ajouter->execute();
+        if(isset($_GET['action']) && !empty($_GET['Nom_Clients'])  && !empty($_GET['Prenom_Clients'])  && !empty($_GET['adresse_Clients']) && !empty($_GET['CP_Clients']) && !empty($_GET['Ville_Clients'])){
+            $toto =  $_GET['date'];
+            $ajouter2 = $bdd->prepare('INSERT INTO clients (Nom_Clients, Prenom_Clients, adresse_Clients, CP_Clients, Ville_Clients  ) VALUES (:Nom_Clients, :Prenom_Clients, :adresse_Clients, :CP_Clients, :Ville_Clients)');
+            $ajouter2->bindParam(':Nom_Clients', $_GET['nom'], 
+            PDO::PARAM_STR);
+            $ajouter2->bindParam(':Prenom_Clients', $_GET['Prenom'], 
+            PDO::PARAM_STR);
+            $ajouter2->bindParam(':adresse_Clients', $_GET['adresse'], 
+            PDO::PARAM_STR);
+            $ajouter2->bindParam(':CP_Clients', $_GET['cp'], 
+            PDO::PARAM_STR);
+            $ajouter2->bindParam(':Ville_Clients', $_GET['Ville_Clients'], 
+            PDO::PARAM_STR);
+            $estceok = $ajouter->execute();
         
-    //             if($estceok){
-    //                 echo 'votre enregistrement a été ajouté avec succés';
+                if($estceok){
+                    echo 'votre enregistrement a été ajouté avec succés';
                     
                 
-    //             } else {
-    //                 echo 'Veuillez recommencer svp, une erreur est survenue';
-    //             }
-    //         }
+                } else {
+                    echo 'Veuillez recommencer svp, une erreur est survenue';
+                }
+            }
 
-    // }
+    }
     // function modifiv() 
     // {
 
