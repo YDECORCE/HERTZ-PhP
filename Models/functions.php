@@ -261,14 +261,14 @@
         $recuperation = $bdd->query('SELECT * FROM louer');
         while($louer = $recuperation->fetch())
         {
-            echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='id' value='".$louer['id_Clients']."'>
-            <input class='form-control length_crud_veh' type='text' name='nom' value='".$louer['id_Véhicules']."'>
-            <input class='form-control length_crud_veh' type='text' name='prenom' value='".$louer['date_fin_Louer']."'>
-            <input class='form-control length_crud_veh' type='checkbox' name='adresse' value='".$louer['retour_Louer']."'>
-            <input class='form-control length_crud_veh' type='text' name='cp' value='".$louer['date_debut_Louer']."'>
+            echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='idc' value='".$louer['id_Clients']."'>
+            <input class='form-control length_crud_veh' type='text' name='idv' value='".$louer['id_Véhicules']."'>
+            <input class='form-control length_crud_veh' type='text' name='fin' value='".$louer['date_fin_Louer']."'>
+            <input class='form-control length_crud_veh' type='checkbox' name='retour' value='".$louer['retour_Louer']."'>
+            <input class='form-control length_crud_veh' type='text' name='debut' value='".$louer['date_debut_Louer']."'>
             
             <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
-            <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>
+            <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>alexa
             
             </form>
             
