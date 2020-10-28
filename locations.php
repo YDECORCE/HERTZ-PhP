@@ -24,8 +24,8 @@
                 liste_déroulante_client();
                 liste_déroulante_vehicule();
                  ?>
-                <input type="date" placeholder="date de début de location" name="date_debut" class="form-control"></input><br />
-                <input type="date" placeholder="date de début de location" name="date_fin" class="form-control"></input><br />
+                <input type="date" placeholder="date de début de location" name="debut" class="form-control"></input><br />
+                <input type="date" placeholder="date de début de location" name="fin" class="form-control"></input><br />
                 <button class="btn btn_jaune btn-primary my-2" type="submit" name="ajouter"
                     value="ajoutl">Créer une location</button>
             </div>
@@ -42,6 +42,9 @@
     </div>
 
     <?php
+ajouterl();
+aff_louer();
+modifil();
 
 ?>
 </div>

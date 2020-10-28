@@ -42,7 +42,7 @@
                 }
             }
     }
-}
+
     function ajouterc()
     {
         $bdd=connect();
@@ -67,14 +67,15 @@
         $bdd=connect();
         if(isset($_GET['ajouter']))
         {
-            $ajouter = $bdd->prepare('INSERT INTO louer ( id_Clients, id_Véhicules, date_fin_Louer, retour_Louer, date_debut_Louer) 
-            VALUES (:id_Clients, :id_Vehicules, :date_fin_Louer, :retour_Louer, :date_debut_Louer)');
+            $ajouter = $bdd->prepare('INSERT INTO louer ( id_Clients, id_Vehicules, date_fin_Louer, retour_Louer, date_debut_Louer) 
+            VALUES (:id_Clients, :id_Vehicules, :date_fin_Louer, 0, :date_debut_Louer)');
             $ajouter->bindParam(':id_Clients', $_GET['idc'],PDO::PARAM_STR);
-            $ajouter->bindParam(':modele_Vehicules', $_GET['idv'],PDO::PARAM_STR);
+            $ajouter->bindParam(':id_Vehicules', $_GET['idv'],PDO::PARAM_STR);
             $ajouter->bindParam(':date_fin_Louer', $_GET['fin'],PDO::PARAM_STR);
-            $ajouter->bindParam(':retour_Louer', $_GET['retour'],PDO::PARAM_STR);
             $ajouter->bindParam(':date_debut_Louer', $_GET['debut'],PDO::PARAM_STR);
             $estceok=$ajouter->execute();
+            // $ajouter->debugDumpParams();
+            //  die;
             
                 if($estceok)
                 {
@@ -224,18 +225,17 @@
     function aff_louer() 
     {
         $bdd=connect();
-        $recuperation = $bdd->query('SELECT * FROM louer');
+        $recuperation = $bdd->query('SELECT * FROM louer ');
         while($louer = $recuperation->fetch())
         {
             echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='idc' value='".$louer['id_Clients']."'>
-            <input class='form-control length_crud_veh' type='text' name='idv' value='".$louer['id_Véhicules']."'>
+            <input class='form-control length_crud_veh' type='text' name='idv' value='".$louer['id_Vehicules']."'>
             <input class='form-control length_crud_veh' type='text' name='fin' value='".$louer['date_fin_Louer']."'>
             <input class='form-control length_crud_veh' type='checkbox' name='retour' value='".$louer['retour_Louer']."'>
             <input class='form-control length_crud_veh' type='text' name='debut' value='".$louer['date_debut_Louer']."'>
             
             <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
-            <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>alexa
-            
+                       
             </form>
             
             </div>";
@@ -252,7 +252,7 @@
 function liste_déroulante_client(){
     $bdd=connect();
     $reponse = $bdd->query('SELECT * FROM clients');
-    echo'<select class="custom-select my-2" name="client">';
+    echo'<select class="custom-select my-2" name="idc">';
     echo'<option value="NULL">Choisir le client</option>';
     while ($donnees = $reponse->fetch()) {
         echo'<option value='.$donnees['id_Clients'].'>'.$donnees['id_Clients'].' '.$donnees['Prenom_Clients'].' '.$donnees['Nom_Clients'].' '.$donnees['CP_Clients'].' '.$donnees['Ville_Clients'].' </option>';
@@ -263,11 +263,40 @@ function liste_déroulante_client(){
     function liste_déroulante_vehicule(){
         $bdd=connect();
         $reponse = $bdd->query('SELECT * FROM vehicules');
-        echo'<select class="custom-select my-2" name="vehicule">';
+        echo'<select class="custom-select my-2" name="idv">';
         echo'<option value="NULL">Choisir le véhicule</option>';
         while ($donnees = $reponse->fetch()) {
             echo'<option value='.$donnees['id_Vehicules'].'>'.$donnees['id_Vehicules'].' / '.$donnees['type_Vehicules'].' / '.$donnees['modele_Vehicules'].' / '.$donnees['immatriculation_Vehicules'].' </option>';
         }
         echo'</select>';
         }
+
+        function modifil()
+        {
+        $bdd=connect();
+        if(isset($_GET['action']) && $_GET['action']=="modifier" && !empty($_GET['idc']) && !empty($_GET['idv']) && !empty($_GET['fin']) && !empty($_GET['retour']) && !empty($_GET['debut']))
+        {
+        $message = '';
+        $modifierv2 = $bdd->prepare('UPDATE louer SET id_Clients = :id_Clients, id_Vehicules = :id_Vehicules, date_fin_Louer = :date_fin_Louer, retour_Louer = :retour_Louer, date_debut_Louer = :date_debut_Louer WHERE id_Vehicules =:id_Vehicules');
+        $modifierv2->bindParam(':id_Clients', $_GET['idc'], PDO::PARAM_STR);
+        $modifierv2->bindParam(':id_Vehicules', $_GET['idv'], PDO::PARAM_STR);
+        $modifierv2->bindParam(':date_fin_Louer', $_GET['fin'], PDO::PARAM_STR);
+        $modifierv2->bindParam(':retour_Louer', $_GET['retour'], PDO::PARAM_STR);
+        $modifierv2->bindParam(':date_debut_Louer', $_GET['debut'], PDO::PARAM_STR);
+        
+        $modifierv2 = $modifierv2->execute();
+        // $modifier->debugDumpParams();
+        // die;
+        if($modifierv2)
+        {
+        echo 'votre enregistrement a bien été modifié';
+        }
+        else
+        {
+        echo 'Veuillez recommencer svp, une erreur est survenue';
+        }
+        }
+        
+        }
+
 ?>
