@@ -51,6 +51,8 @@ ajouterv();
          <?php
 aff_voiture();
 modifiv();
+supriv();
+
 ?>
 
     </div>

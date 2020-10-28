@@ -18,7 +18,7 @@
         
 
         
-    }
+   
     
     function ajouterv()
     {
@@ -114,10 +114,10 @@
     function supriv()
     {
         $bdd=connect();
-        if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['	id_Véhicules'])){
+        if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['id'])){
             
-            $supprimer = $bdd->prepare('DELETE FROM véhicules WHERE id_Véhicules =:id_Véhicule');
-            $supprimer->bindParam(':id_Véhicules', $_GET['id_Véhicules'],PDO::PARAM_STR);
+            $supprimer = $bdd->prepare('DELETE FROM vehicules WHERE id_Vehicules =:id_Vehicule');
+            $supprimer->bindParam(':id_Vehicule', $_GET['id'],PDO::PARAM_STR);
 
 
             $supprimer = $supprimer->execute();
