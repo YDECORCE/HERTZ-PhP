@@ -263,15 +263,15 @@
         FROM clients
         INNER JOIN louer ON clients.id_Clients = louer.id_Clients
         INNER JOIN louer ON vehicules.type_Vehicules = louer.id_Vehicules');
-        
+        $ch=$_GET['retour'];
+        if(in_array($recup['retour_Louer'], $ch)) echo 'cheched';
         while($louer = $recuperation->fetch()
-        {
-            $ch=$_GET['retour']
+        {            
             echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='idc' value='".$recup['id_Clients']."'>
             <input class='form-control length_crud_veh' type='text' name='idv' value='".$recup['id_Véhicules']."'>
             <input class='form-control length_crud_veh' type='text' name='debut' value='".$recup['date_debut_Louer']."'>
             <input class='form-control length_crud_veh' type='text' name='fin' value='".$recup['date_fin_Louer']."'>
-            <input class='form-control length_crud_veh' type='checkbox' name='retour[]' value='".$recup['retour_Louer']." " if(in_array($recup['retour_Louer'], $ch)) echo 'cheched'">
+            <input class='form-control length_crud_veh' type='checkbox' name='retour[]' value='".$recup['retour_Louer']."'>
             
             
             <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
