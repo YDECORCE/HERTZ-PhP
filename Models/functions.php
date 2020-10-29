@@ -85,6 +85,11 @@
                 {
                     echo 'Veuillez recommencer svp, une erreur est survenue <br>';
                 }
+                echo '<script language="Javascript">
+
+                document.location.replace("locations.php");
+                
+                </script>';
             }
     }
     function modifiv() 
@@ -225,21 +230,31 @@
     function aff_louer() 
     {
         $bdd=connect();
-        $recup= $bdd->query('SELECT clients.id_Clients, Nom_Clients, Prenom_Clients, date_debut_Louer, date_fin_Louer, retour_Louer, vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules
+        $recup= $bdd->query('SELECT clients.id_Clients, Nom_Clients, Prenom_Clients, id_location, date_debut_Louer, date_fin_Louer, retour_Louer, vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules
         FROM clients
         INNER JOIN louer ON clients.id_Clients = louer.id_Clients
         INNER JOIN vehicules ON louer.id_Vehicules = vehicules.id_Vehicules
         WHERE louer.retour_Louer=0');
         while($donnees = $recup->fetch())
         {
-            echo "<form><div class='d-flex'> <input class='form-control length_crud_Cl' style='width:10%' type='text' name='idc' value='".$donnees['id_Clients']."'>
+
+            if( $donnees['retour_Louer']==1){
+        
+               $status = "checked";
+            }
+            else{
+           
+                $status = "test";
+            }
+            
+            echo "<form><div class='d-flex'><input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idl' value='".$donnees['id_location']."'> <input class='form-control length_crud_Cl' style='width:10%' type='text' name='idc' value='".$donnees['id_Clients']."'>
             <input class='form-control length_crud_Cl' style='width:10%' type='text' name='idv' value='".$donnees['id_Vehicules']."'>
             <input class='form-control length_crud_Cl' style='width:12%' type='text' name='nom' value='".$donnees['Nom_Clients']."'>
             <input class='form-control length_crud_Cl' style='width:12%' type='text' name='vehicule' value='".$donnees['modele_Vehicules']."'>
             <input class='form-control length_crud_Cl' style='width:12%' type='text' name='immat' value='".$donnees['immatriculation_Vehicules']."'>
             <input class='form-control length_crud_Cl' style='width:16%' type='date' name='debut' value='".$donnees['date_debut_Louer']."'>
             <input class='form-control length_crud_Cl' style='width:16%' type='date' name='fin' value='".$donnees['date_fin_Louer']."'>
-            <input class='form-control length_crud_Cl' style='width:10%' type='checkbox' name='retour' value='".$donnees['retour_Louer']."'>
+            <input class='form-control length_crud_Cl' style='width:10%' type='checkbox' name='retour' value='1'" . $status .">
                        
             <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
                        
@@ -250,11 +265,7 @@
         }
     }
     
-    function refresh_pages($url){
-    $delai=1; 
-    header("Refresh: $delai;url=$url");
-    }
-
+    
 
 function liste_déroulante_client(){
     $bdd=connect();
@@ -281,19 +292,28 @@ function liste_déroulante_client(){
         function modifil()
         {
         $bdd=connect();
-        if(isset($_GET['action']) && $_GET['action']=="modifier" && !empty($_GET['idc']) && !empty($_GET['idv']) && !empty($_GET['fin']) && !empty($_GET['retour']) && !empty($_GET['debut']))
+        if(isset($_GET['action']) && $_GET['action']=="modifier" && !empty($_GET['idc']) && !empty($_GET['idv']) && !empty($_GET['fin']) && !empty($_GET['debut']))
         {
+            if(isset($_GET['retour'])){
+                $valeurretour = "1";
+            }
+            else{
+                $valeurretour = "0";
+            }
+
         $message = '';
-        $modifierv2 = $bdd->prepare('UPDATE louer SET id_Clients = :id_Clients, id_Vehicules = :id_Vehicules, date_fin_Louer = :date_fin_Louer, retour_Louer = :retour_Louer, date_debut_Louer = :date_debut_Louer WHERE id_Vehicules =:id_Vehicules');
-        $modifierv2->bindParam(':id_Clients', $_GET['idc'], PDO::PARAM_STR);
-        $modifierv2->bindParam(':id_Vehicules', $_GET['idv'], PDO::PARAM_STR);
+        $modifierv2 = $bdd->prepare('UPDATE louer SET date_fin_Louer = :date_fin_Louer, retour_Louer = :retour_Louer, date_debut_Louer = :date_debut_Louer WHERE id_location =:idl');
+
+        $modifierv2->bindParam(':idl', $_GET['idl'], PDO::PARAM_STR);
         $modifierv2->bindParam(':date_fin_Louer', $_GET['fin'], PDO::PARAM_STR);
-        $modifierv2->bindParam(':retour_Louer', $_GET['retour'], PDO::PARAM_STR);
+        $modifierv2->bindParam(':retour_Louer', $valeurretour, PDO::PARAM_STR);
         $modifierv2->bindParam(':date_debut_Louer', $_GET['debut'], PDO::PARAM_STR);
+            
         
         $modifierv2 = $modifierv2->execute();
-        // $modifier->debugDumpParams();
-        // die;
+        echo '<script language="Javascript">
+        document.location.replace("locations.php");
+        </script>';
         if($modifierv2)
         {
         echo 'votre enregistrement a bien été modifié';
@@ -304,6 +324,12 @@ function liste_déroulante_client(){
         }
         }
         
+        }
+
+        function refresh($url){
+            echo '<script language="Javascript">
+            document.location.replace("'.$url.'");
+            </script>';
         }
 
 ?>
