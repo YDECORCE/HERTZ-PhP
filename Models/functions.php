@@ -261,11 +261,16 @@
         $recuperation = $bdd->query('SELECT * FROM louer');
         $recupv= $bdd->query('SELECT id_Clients, Nom_Clients, Prenom_Clients
         FROM clients
-        INNER JOIN louer ON utilisateur.id = commande.utilisateur_id');
-        while($louer = $recuperation->fetch())
+        INNER JOIN louer ON clients.id_Clients = louer.id_Clients');
+        $recupv= $bdd->query('SELECT type_Vehicules, modele_Vehicules, immatriculation_Vehicules
+        FROM vehicules
+        INNER JOIN louer ON vehicules.type_Vehicules = louer.id_Vehicules');
+        while($louer = $recuperation->fetch() or
+              $client= $recupv->fetch() or
+              $vhehi= $recupv->fetch())
         {
-            echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='idc' value='".$louer['id_Clients']."'>
-            <input class='form-control length_crud_veh' type='text' name='idv' value='".$louer['id_Véhicules']."'>
+            echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='idc' value='".$client['id_Clients']."'>
+            <input class='form-control length_crud_veh' type='text' name='idv' value='".$vhehi['id_Véhicules']."'>
             <input class='form-control length_crud_veh' type='text' name='fin' value='".$louer['date_fin_Louer']."'>
             <input class='form-control length_crud_veh' type='checkbox' name='retour' value='".$louer['retour_Louer']."'>
             <input class='form-control length_crud_veh' type='text' name='debut' value='".$louer['date_debut_Louer']."'>
