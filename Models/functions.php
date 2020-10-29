@@ -259,21 +259,20 @@
     {
         $bdd=connect();
         $recuperation = $bdd->query('SELECT * FROM louer');
-        $recupv= $bdd->query('SELECT id_Clients, Nom_Clients, Prenom_Clients
+        $recup= $bdd->query('SELECT id_Clients, Nom_Clients, Prenom_Clients, 
         FROM clients
-        INNER JOIN louer ON clients.id_Clients = louer.id_Clients');
-        $recupv= $bdd->query('SELECT type_Vehicules, modele_Vehicules, immatriculation_Vehicules
-        FROM vehicules
+        INNER JOIN louer ON clients.id_Clients = louer.id_Clients
         INNER JOIN louer ON vehicules.type_Vehicules = louer.id_Vehicules');
-        while($louer = $recuperation->fetch() or
-              $client= $recupv->fetch() or
-              $vhehi= $recupv->fetch())
+        
+        while($louer = $recuperation->fetch()
         {
-            echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='idc' value='".$client['id_Clients']."'>
-            <input class='form-control length_crud_veh' type='text' name='idv' value='".$vhehi['id_Véhicules']."'>
-            <input class='form-control length_crud_veh' type='text' name='fin' value='".$louer['date_fin_Louer']."'>
-            <input class='form-control length_crud_veh' type='checkbox' name='retour' value='".$louer['retour_Louer']."'>
-            <input class='form-control length_crud_veh' type='text' name='debut' value='".$louer['date_debut_Louer']."'>
+            $ch=$_GET['retour']
+            echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='idc' value='".$recup['id_Clients']."'>
+            <input class='form-control length_crud_veh' type='text' name='idv' value='".$recup['id_Véhicules']."'>
+            <input class='form-control length_crud_veh' type='text' name='debut' value='".$recup['date_debut_Louer']."'>
+            <input class='form-control length_crud_veh' type='text' name='fin' value='".$recup['date_fin_Louer']."'>
+            <input class='form-control length_crud_veh' type='checkbox' name='retour[]' value='".$recup['retour_Louer']." " if(in_array($recup['retour_Louer'], $ch)) echo 'cheched'">
+            
             
             <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
             
