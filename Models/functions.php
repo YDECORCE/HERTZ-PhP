@@ -239,9 +239,7 @@
        
          while ($client = $recuperation->fetch())
         {
-            echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='id' value='".$client['id_Clients']."'>
-            <input class='form-control length_crud_veh' type='text' name='nom' value='".$client['Nom_Clients']."'>
-            <input class='form-control length_crud_veh' type='text' name='prenom' value='".$client['Prenom_Clients']."'>
+            echo "<form><div class='d-flex'> <input class='form-control length_crud_vee='".$client['Prenom_Clients']."'>
             <input class='form-control length_crud_veh' type='text' name='adresse' value='".$client['adresse_Clients']."'>
             <input class='form-control length_crud_veh' type='text' name='cp' value='".$client['CP_Clients']."'>
             <input class='form-control length_crud_veh' type='text' name='ville' value='".$client['Ville_Clients']."'>
@@ -249,7 +247,9 @@
             <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
             <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>
             
-            </form>
+            </form>h' type='text' name='id' value='".$client['id_Clients']."'>
+            <input class='form-control length_crud_veh' type='text' name='nom' value='".$client['Nom_Clients']."'>
+            <input class='form-control length_crud_veh' type='text' name='prenom' valu
             
             </div>";
 
@@ -259,6 +259,9 @@
     {
         $bdd=connect();
         $recuperation = $bdd->query('SELECT * FROM louer');
+        $recupv= $bdd->query('SELECT id_Clients, Nom_Clients, Prenom_Clients
+        FROM clients
+        INNER JOIN louer ON utilisateur.id = commande.utilisateur_id');
         while($louer = $recuperation->fetch())
         {
             echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='idc' value='".$louer['id_Clients']."'>
@@ -268,7 +271,6 @@
             <input class='form-control length_crud_veh' type='text' name='debut' value='".$louer['date_debut_Louer']."'>
             
             <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
-            <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>alexa
             
             </form>
             
