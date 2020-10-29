@@ -16,7 +16,7 @@
    include 'header.php';
    require ('Models/functions.php');
    ?>
-    <div class="container pt-5">
+    <div class="container cont50vh pt-5">
         <h2>Ajout d'un nouvelle location</h2>
         <form name="ajoutlocation" method="get" action="locations.php">
             <div class="form-group">
@@ -30,22 +30,25 @@
                     value="ajoutl">Créer une location</button>
             </div>
         </form>
-        
+    </div>    
     
-    <div class="d-flex">
+    <div class="container d-flex" style="flex-wrap:wrap">
         <input class='form-control length_crud_Cl bg_entete_tab' style='width:10%' value='Id Client'>
         <input class='form-control length_crud_Cl bg_entete_tab' style='width:10%' value='Id véhicule'>
-        <input class='form-control length_crud_Cl bg_entete_tab' style='width:20%' value='début location'>
-        <input class='form-control length_crud_Cl bg_entete_tab' style='width:20%' value='fin location'>
+        <input class='form-control length_crud_Cl bg_entete_tab' style='width:12%' value='Nom'>
+        <input class='form-control length_crud_Cl bg_entete_tab' style='width:12%' value='Modèle'>
+        <input class='form-control length_crud_Cl bg_entete_tab' style='width:12%' value='Immatriculation'>
+        <input class='form-control length_crud_Cl bg_entete_tab' style='width:16%' value='début location'>
+        <input class='form-control length_crud_Cl bg_entete_tab' style='width:16%' value='fin location'>
         <input class='form-control length_crud_Cl bg_entete_tab' style='width:10%' value='retour'>
         
-    </div>
+  
 
     <?php
-ajouterl();
+
 aff_louer();
 modifil();
-
+ajouterl();
 ?>
 </div>
 

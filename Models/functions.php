@@ -225,15 +225,22 @@
     function aff_louer() 
     {
         $bdd=connect();
-        $recuperation = $bdd->query('SELECT * FROM louer ');
-        while($louer = $recuperation->fetch())
+        $recup= $bdd->query('SELECT clients.id_Clients, Nom_Clients, Prenom_Clients, date_debut_Louer, date_fin_Louer, retour_Louer, vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules
+        FROM clients
+        INNER JOIN louer ON clients.id_Clients = louer.id_Clients
+        INNER JOIN vehicules ON louer.id_Vehicules = vehicules.id_Vehicules
+        WHERE louer.retour_Louer=0');
+        while($donnees = $recup->fetch())
         {
-            echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='idc' value='".$louer['id_Clients']."'>
-            <input class='form-control length_crud_veh' type='text' name='idv' value='".$louer['id_Vehicules']."'>
-            <input class='form-control length_crud_veh' type='text' name='fin' value='".$louer['date_fin_Louer']."'>
-            <input class='form-control length_crud_veh' type='checkbox' name='retour' value='".$louer['retour_Louer']."'>
-            <input class='form-control length_crud_veh' type='text' name='debut' value='".$louer['date_debut_Louer']."'>
-            
+            echo "<form><div class='d-flex'> <input class='form-control length_crud_Cl' style='width:10%' type='text' name='idc' value='".$donnees['id_Clients']."'>
+            <input class='form-control length_crud_Cl' style='width:10%' type='text' name='idv' value='".$donnees['id_Vehicules']."'>
+            <input class='form-control length_crud_Cl' style='width:12%' type='text' name='nom' value='".$donnees['Nom_Clients']."'>
+            <input class='form-control length_crud_Cl' style='width:12%' type='text' name='vehicule' value='".$donnees['modele_Vehicules']."'>
+            <input class='form-control length_crud_Cl' style='width:12%' type='text' name='immat' value='".$donnees['immatriculation_Vehicules']."'>
+            <input class='form-control length_crud_Cl' style='width:16%' type='date' name='debut' value='".$donnees['date_debut_Louer']."'>
+            <input class='form-control length_crud_Cl' style='width:16%' type='date' name='fin' value='".$donnees['date_fin_Louer']."'>
+            <input class='form-control length_crud_Cl' style='width:10%' type='checkbox' name='retour' value='".$donnees['retour_Louer']."'>
+                       
             <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
                        
             </form>

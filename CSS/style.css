@@ -7,11 +7,13 @@
 .trait{
     border-bottom: 10px solid rgb(255,208,4) ;
 }
-.container{
-    min-height: 100vh;;
-}
+
 .btn_jaune{
     background-color:  rgb(255,208,4);
+}
+.cont50vh{
+    min-height: 50vh;
+    flex-wrap: wrap;
 }
 .bgfooter{
     min-height: 20vh;
@@ -29,7 +31,7 @@
     text-align: center;
 }
 .length_crud_Cl{
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
 
 }
 .bg_ajout_vehicule{
