@@ -43,7 +43,8 @@
 ajouterc();
 aff_client();
 modific();
-supric()
+supric();
+aff_historique();
 ?>
         <!--affichage historique client-->
         <div class="container my-5">
