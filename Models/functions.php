@@ -219,6 +219,7 @@
         <input class='form-control length_crud_Cl' style='width:20%' type='text' name='ville' value='".$client['Ville_Clients']."'>
         
          <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
+         <button class='btn btn_jaune btn-primary' type='submit' value='historique' name='action'>Historique</button>
         <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>
         
          </form>
@@ -247,13 +248,13 @@
                 $status = "test";
             }
             
-            echo "<form><div class='d-flex'><input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idl' value='".$donnees['id_location']."'> <input class='form-control length_crud_Cl' style='width:10%' type='text' name='idc' value='".$donnees['id_Clients']."'>
-            <input class='form-control length_crud_Cl' style='width:10%' type='text' name='idv' value='".$donnees['id_Vehicules']."'>
-            <input class='form-control length_crud_Cl' style='width:12%' type='text' name='nom' value='".$donnees['Nom_Clients']."'>
-            <input class='form-control length_crud_Cl' style='width:12%' type='text' name='vehicule' value='".$donnees['modele_Vehicules']."'>
-            <input class='form-control length_crud_Cl' style='width:12%' type='text' name='immat' value='".$donnees['immatriculation_Vehicules']."'>
-            <input class='form-control length_crud_Cl' style='width:16%' type='date' name='debut' value='".$donnees['date_debut_Louer']."'>
-            <input class='form-control length_crud_Cl' style='width:16%' type='date' name='fin' value='".$donnees['date_fin_Louer']."'>
+            echo "<form><div class='d-flex'><input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idl' value='".$donnees['id_location']."'> <input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idc' value='".$donnees['id_Clients']."'>
+            <input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idv' value='".$donnees['id_Vehicules']."'>
+            <input class='form-control length_crud_Cl' style='width:15%' type='text' name='nom' value='".$donnees['Nom_Clients']."'>
+            <input class='form-control length_crud_Cl' style='width:15%' type='text' name='vehicule' value='".$donnees['modele_Vehicules']."'>
+            <input class='form-control length_crud_Cl' style='width:15%' type='text' name='immat' value='".$donnees['immatriculation_Vehicules']."'>
+            <input class='form-control length_crud_Cl' style='width:18%' type='date' name='debut' value='".$donnees['date_debut_Louer']."'>
+            <input class='form-control length_crud_Cl' style='width:18%' type='date' name='fin' value='".$donnees['date_fin_Louer']."'>
             <input class='form-control length_crud_Cl' style='width:10%' type='checkbox' name='retour' value='1'" . $status .">
                        
             <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
