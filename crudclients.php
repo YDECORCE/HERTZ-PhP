@@ -44,7 +44,8 @@
 ajouterc();
 aff_client();
 modific();
-supric()
+supric();
+aff_historique();
 ?>
 </div>
 
