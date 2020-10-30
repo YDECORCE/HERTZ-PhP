@@ -303,52 +303,28 @@
     function aff_voitdispo() 
     {
         $bdd=connect();
-        $dater=$_GET['date_fin_Louer'];
-        if($dater < (int)date_jour()){
-            $dattech=1;
-        }
-        else{
-            $dattech=0;
-        }    
-        
-            $recup= $bdd->query('SELECT id_location, vehicules.id_Vehicules, retour_Louer, vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules
+                      
+            $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, louer.date_debut_Louer
             FROM vehicules
-            INNER JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules where louer.retour_Louer=0 AND $dattech=1 ');
+            INNER JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules where louer.retour_Louer=0 AND  louer.date_debut_Louer>NOW()');
         
             while($donnees = $recup->fetch())
             {
-
-                if( $donnees['retour_Louer']==1){
-            
-                $status = "checked";
-                }
-                else{
-            
-                    $status = "test";
-                }
-                
-                echo "<form><div class='d-flex'><input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idl' value='".$donnees['id_location']."'> 
-                <input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idc' value='".$donnees['id_Clients']."'>
-                <input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idv' value='".$donnees['id_Vehicules']."'>
-                <input class='form-control length_crud_Cl' style='width:12%' type='text' name='nom' value='".$donnees['Nom_Clients']."'>
-                <input class='form-control length_crud_Cl' style='width:12%' type='text' name='vehicule' value='".$donnees['modele_Vehicules']."'>
-                <input class='form-control length_crud_Cl' style='width:12%' type='text' name='immat' value='".$donnees['immatriculation_Vehicules']."'>
-                <input class='form-control length_crud_Cl' style='width:16%' type='date' name='debut' value='".$donnees['date_debut_Louer']."'>
-                <input class='form-control length_crud_Cl' style='width:16%' type='date' name='fin' value='".$donnees['date_fin_Louer']."'>
-                
-                        
-                
-                        
-                </form>
-                
-                </div>";
-            }
+                echo $donnees['id_Vehicules'];
+                echo $donnees['type_Vehicules'];
+                echo $donnees['modele_Vehicules'];
+                echo $donnees['immatriculation_Vehicules'];
+                echo $donnees['date_debut_Louer'];
+             
         
+                }     
+        }  
 
-function date_jour()
-{
-    date("j, n, Y");
-}
+// function date_jour()
+// {
+//     $date=(int(date('j, n, Y')));
+//     return $date;
+// }
 
 function liste_déroulante_client()
 {
