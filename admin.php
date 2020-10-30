@@ -20,7 +20,9 @@
     <h1> Etat du parc automobile à la date du <?php echo date('d-m-Y'); ?></h1>
 </div>
 </div>
+
 <?php
+
 include 'footer.php';
 ?>
 </body>

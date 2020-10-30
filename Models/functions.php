@@ -274,7 +274,7 @@
             $recup= $bdd->query('SELECT clients.id_Clients, Nom_Clients, Prenom_Clients, id_location, date_debut_Louer, date_fin_Louer, retour_Louer, vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules
             FROM clients
             INNER JOIN louer ON clients.id_Clients = louer.id_Clients
-            INNER JOIN vehicules ON louer.id_Vehicules = vehicules.id_Vehicules WHERE louer.retour_Louer=1 && clients.id client= louer.id_Clients');
+            INNER JOIN vehicules ON louer.id_Vehicules = vehicules.id_Vehicules WHERE louer.retour_Louer=1 AND clients.id client= louer.id_Clients');
         
             while($donnees = $recup->fetch())
             {
@@ -305,6 +305,44 @@
                 </div>";
             }
         }
+    }
+    function aff_voitdispo() 
+    {
+        $bdd=connect();
+        
+            $recup= $bdd->query('SELECT id_location, vehicules.id_Vehicules, retour_Louer, vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules
+            FROM vehicules
+            INNER JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules where louer.retour_Louer=0');
+        
+            while($donnees = $recup->fetch())
+            {
+
+                if( $donnees['retour_Louer']==1){
+            
+                $status = "checked";
+                }
+                else{
+            
+                    $status = "test";
+                }
+                
+                echo "<form><div class='d-flex'><input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idl' value='".$donnees['id_location']."'> 
+                <input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idc' value='".$donnees['id_Clients']."'>
+                <input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idv' value='".$donnees['id_Vehicules']."'>
+                <input class='form-control length_crud_Cl' style='width:12%' type='text' name='nom' value='".$donnees['Nom_Clients']."'>
+                <input class='form-control length_crud_Cl' style='width:12%' type='text' name='vehicule' value='".$donnees['modele_Vehicules']."'>
+                <input class='form-control length_crud_Cl' style='width:12%' type='text' name='immat' value='".$donnees['immatriculation_Vehicules']."'>
+                <input class='form-control length_crud_Cl' style='width:16%' type='date' name='debut' value='".$donnees['date_debut_Louer']."'>
+                <input class='form-control length_crud_Cl' style='width:16%' type='date' name='fin' value='".$donnees['date_fin_Louer']."'>
+                <input class='form-control length_crud_Cl' style='width:10%' type='checkbox' name='retour' value='1'" . $status .">
+                        
+                
+                        
+                </form>
+                
+                </div>";
+            }
+        
     }
     
 
