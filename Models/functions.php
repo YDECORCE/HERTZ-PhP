@@ -268,42 +268,36 @@
     function aff_historique() 
     {
         $bdd=connect();
-        $button = $_GET['nom du boutton'];
-        if(isset($_GET[$button]) && $_GET[$button]=="historique")
-        {
-            $recup= $bdd->query('SELECT clients.id_Clients, Nom_Clients, Prenom_Clients, id_location, date_debut_Louer, date_fin_Louer, retour_Louer, vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules
+        if(isset($_GET['action']) && $_GET['action']=="historique")
+                {
+            $nom_client = $_GET['nom'];
+            $prenom_client = $_GET['prenom'];
+            $client = $_GET['id'];        
+            $recup= $bdd->prepare('SELECT clients.id_Clients, Nom_Clients, Prenom_Clients, id_location, date_debut_Louer, date_fin_Louer, retour_Louer, vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules
             FROM clients
             INNER JOIN louer ON clients.id_Clients = louer.id_Clients
-            INNER JOIN vehicules ON louer.id_Vehicules = vehicules.id_Vehicules WHERE louer.retour_Louer=1 AND clients.id client= louer.id_Clients');
-        
+            INNER JOIN vehicules ON louer.id_Vehicules = vehicules.id_Vehicules WHERE louer.retour_Louer=1 AND clients.id_Clients= :client');
+            $recup->bindParam(':client', $client);
+            $recup->execute();
+            
+            echo '<div class="container my-5">
+            <h2 class=" text-center py-5"> Historique client</h2>
+            <table class="table">
+                <thead class="bg_entete_tab">
+                    <tr>
+                        <th scope="col">Véhicule</th>
+                        <th scope="col">Immatriculation</th>
+                        <th scope="col">Début de Location</th>
+                        <th scope="col">Début de Location</th>
+                    </tr>
+                </thead>
+                <tbody>';
+                
             while($donnees = $recup->fetch())
             {
-
-                if( $donnees['retour_Louer']==1){
-            
-                $status = "checked";
-                }
-                else{
-            
-                    $status = "test";
-                }
-                
-                echo "<form><div class='d-flex'><input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idl' value='".$donnees['id_location']."'> 
-                <input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idc' value='".$donnees['id_Clients']."'>
-                <input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idv' value='".$donnees['id_Vehicules']."'>
-                <input class='form-control length_crud_Cl' style='width:12%' type='text' name='nom' value='".$donnees['Nom_Clients']."'>
-                <input class='form-control length_crud_Cl' style='width:12%' type='text' name='vehicule' value='".$donnees['modele_Vehicules']."'>
-                <input class='form-control length_crud_Cl' style='width:12%' type='text' name='immat' value='".$donnees['immatriculation_Vehicules']."'>
-                <input class='form-control length_crud_Cl' style='width:16%' type='date' name='debut' value='".$donnees['date_debut_Louer']."'>
-                <input class='form-control length_crud_Cl' style='width:16%' type='date' name='fin' value='".$donnees['date_fin_Louer']."'>
-                <input class='form-control length_crud_Cl' style='width:10%' type='checkbox' name='retour' value='1'" . $status .">
-                        
-                
-                        
-                </form>
-                
-                </div>";
-            }
+                echo '<tr class=" text-center"><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['immatriculation_Vehicules'].'</td><td>'.$donnees['date_debut_Louer'].'</td><td>'.$donnees['date_fin_Louer'].'</td></tr>';
+         }
+         echo'</tbody></table></div>';
         }
     }
     function aff_voitdispo() 

@@ -44,34 +44,11 @@ ajouterc();
 aff_client();
 modific();
 supric();
-aff_historique();
+
 ?>
-        <!--affichage historique client-->
-        <div class="container my-5">
-            <h2 class=" text-center py-5"> Historique client</h2>
-            <table class="table">
-                <thead class="bg_entete_tab">
-                    <tr>
-                        <th scope="col">Véhicule</th>
-                        <th scope="col">Immatriculation</th>
-                        <th scope="col">Début de Location</th>
-                        <th scope="col">Début de Location</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!--début boucle while-->
-                    <tr class=" text-center">
-                        <td>voiture</td>
-                        <td>immat</td>
-                        <td>debut</td>
-                        <td>fin</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
     </div>
-
+     
     <?php
+    aff_historique();
 include 'footer.php';
 ?>
