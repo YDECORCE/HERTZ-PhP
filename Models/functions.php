@@ -303,10 +303,17 @@
     function aff_voitdispo() 
     {
         $bdd=connect();
+        $dater=$_GET['date_fin_Louer'];
+        if($dater < (int)date_jour()){
+            $dattech=1;
+        }
+        else{
+            $dattech=0;
+        }    
         
             $recup= $bdd->query('SELECT id_location, vehicules.id_Vehicules, retour_Louer, vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules
             FROM vehicules
-            INNER JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules where louer.retour_Louer=0');
+            INNER JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules where louer.retour_Louer=0 AND $dattech=1 ');
         
             while($donnees = $recup->fetch())
             {
@@ -328,7 +335,7 @@
                 <input class='form-control length_crud_Cl' style='width:12%' type='text' name='immat' value='".$donnees['immatriculation_Vehicules']."'>
                 <input class='form-control length_crud_Cl' style='width:16%' type='date' name='debut' value='".$donnees['date_debut_Louer']."'>
                 <input class='form-control length_crud_Cl' style='width:16%' type='date' name='fin' value='".$donnees['date_fin_Louer']."'>
-                <input class='form-control length_crud_Cl' style='width:10%' type='checkbox' name='retour' value='1'" . $status .">
+                
                         
                 
                         
@@ -337,10 +344,14 @@
                 </div>";
             }
         
-    }
-    
 
-function liste_déroulante_client(){
+function date_jour()
+{
+    date("j, n, Y");
+}
+
+function liste_déroulante_client()
+{
     $bdd=connect();
     $reponse = $bdd->query('SELECT * FROM clients');
     echo'<select class="custom-select my-2" name="idc">';
@@ -360,7 +371,6 @@ function liste_déroulante_client(){
             echo'<option value='.$donnees['id_Vehicules'].'>'.$donnees['id_Vehicules'].' / '.$donnees['type_Vehicules'].' / '.$donnees['modele_Vehicules'].' / '.$donnees['immatriculation_Vehicules'].' </option>';
         }
         echo'</select>';
-        }
 
         function modifil()
         {
@@ -404,4 +414,4 @@ function liste_déroulante_client(){
             document.location.replace("'.$url.'");
             </script>';
         }
-    
+}
