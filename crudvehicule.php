@@ -59,7 +59,7 @@ ajouterv();
 aff_voiture();
 modifiv();
 supriv();
-
+aff_voitdispo()
 ?>
 
     </div>

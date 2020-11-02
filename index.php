@@ -31,7 +31,9 @@
 
 <section id="listevehicule">
 <div class="container">
-
+  <?php
+    // aff_voitdispo()
+?>
 </div>
 </section>
 <div class="row justify-content-center">
