@@ -30,10 +30,17 @@
 </nav>
 
 <section id="listevehicule">
+<<<<<<< HEAD
 <div class="container d-flex" style="flex-wrap:wrap">
   <?php 
 require 'Models/functions.php';
 aff_voitdispoFront() ?>
+=======
+<div class="container">
+  <?php
+    // aff_voitdispo()
+?>
+>>>>>>> dev
 </div>
 </section>
 <div class="row justify-content-center">

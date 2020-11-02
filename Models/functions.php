@@ -300,7 +300,8 @@
          echo'</tbody></table></div>';
         }
     }
-    function aff_voitdispo() 
+
+    function aff_voitdispo() //voiture disponible
     {
         $bdd=connect();
                       
@@ -309,7 +310,6 @@
             LEFT JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
             WHERE (retour_Louer = 0 and louer.date_debut_Louer> now()) or (louer.id_Vehicules IS NULL) or retour_Louer = 1
             GROUP BY vehicules.id_Vehicules');
-        
             while($donnees = $recup->fetch())
             {
                 if(($donnees['retour_Louer']=='1')||($donnees['retour_Louer']==NULL)){
@@ -475,3 +475,38 @@ function liste_déroulante_client()
             </script>';
         }
 }
+function aff_voit_en_location() //voiture en cour de location
+    {
+        $bdd=connect();
+        
+            $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_debut_Louer, date_fin_Louer
+            FROM vehicules
+            LEFT JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
+            WHERE (retour_Louer = 0 and louer.date_fin_Louer> now()) and (retour_Louer = 0 and louer.date_debut_Louer< now())');
+            echo 'Véhicules en location</br>';
+            while($donnees = $recup->fetch())
+            {
+            echo $donnees['id_Vehicules'];
+            echo $donnees['modele_Vehicules'];  
+            }
+       
+            }
+        
+        function aff_voitrouge() //voiture qui n'a pas été rendu
+    {
+        $bdd=connect();
+        
+            $recup= $bdd->query('SELECT vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_fin_Louer, clients.id_Clients, Nom_Clients, Prenom_Clients, adresse_Clients, CP_Clients, Ville_Clients
+            FROM vehicules
+            INNER JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules 
+            INNER JOIN clients ON louer.id_Clients = clients.id_Clients 
+            WHERE (retour_Louer = 0 and louer.date_fin_Louer<now())');
+            echo 'Véhicules en retard</br>';
+            while($donnees = $recup->fetch())
+            {
+            echo $donnees['id_Vehicules'];
+            echo $donnees['date_fin_Louer'];  
+            }
+       
+            }
+    

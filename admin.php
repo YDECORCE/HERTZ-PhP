@@ -24,6 +24,10 @@
                    </tbody>
                </table>
            </div>
+           <?php
+           aff_voit_en_location();
+           aff_voitrouge();
+           ?>
        </div>
    </div>
    <?php
