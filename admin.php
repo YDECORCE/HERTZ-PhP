@@ -10,8 +10,8 @@
            </div>
            <div class="col-12">
                <h2>Véhicules disponibles à la location</h2>
-               <table class="table">
-                   <thead class="bg_entete_tab">
+               <table class="table table-hover table-sm">
+                   <thead class="table-success text-center" >
                        <tr>
                            <th scope="col">Id Vehicule</th>
                            <th scope="col">Véhicule</th>

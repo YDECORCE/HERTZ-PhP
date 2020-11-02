@@ -39,7 +39,7 @@ ajouterv();
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container mb-5">
         <div class="d-flex">
             <input class='form-control length_crud_veh bg_entete_tab' value='Identifiant Véhicule'>
             <input class='form-control length_crud_veh bg_entete_tab' value='Type de Véhicule'>

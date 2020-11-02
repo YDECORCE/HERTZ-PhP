@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="container pt-5">
+        <div class="container py-5">
         <div class="d-flex">
             <input class='form-control length_crud_Cl bg_entete_tab' style='width:5%' value='Id'>
             <input class='form-control length_crud_Cl bg_entete_tab' style='width:14%' value='Nom'>

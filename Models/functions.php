@@ -34,7 +34,7 @@
             
                 if($estceok)
                 {
-                    echo 'votre enregistrement a été ajouté avec succès <br>';
+                    echo 'Votre enregistrement a été ajouté avec succès <br>';
                 } 
                 else 
                 {
@@ -56,7 +56,7 @@
             $estceok = $ajouter2->execute();
         
                 if($estceok){
-                    echo 'votre enregistrement a été ajouté avec succès <br>';
+                    echo 'Votre enregistrement a été ajouté avec succès <br>';
                 } else {
                     echo 'Veuillez recommencer svp, une erreur est survenue <br>';
                 }
@@ -79,7 +79,7 @@
             
                 if($estceok)
                 {
-                    echo 'votre enregistrement a été ajouté avec succès <br>';
+                    echo 'Votre enregistrement a été ajouté avec succès <br>';
                 } 
                 else 
                 {
@@ -109,7 +109,7 @@
             // die;
                 if($modifierv2)
                 {
-                    echo 'votre enregistrement a bien été modifié';
+                    echo 'Votre enregistrement a bien été modifié';
                 } 
                 else 
                 {
@@ -134,7 +134,7 @@
             $modifierc2 = $modifierc2->execute();
             
                 if($modifierc2){
-                    echo 'votre enregistrement a bien été modifié';
+                    echo 'Votre enregistrement a bien été modifié';
                 } 
                 else 
                 {
@@ -155,7 +155,7 @@
             $supprimer = $supprimer->execute();
                 if($supprimer)
                 {
-                    echo 'votre enregistrement a bien été supprimé';
+                    echo 'Votre enregistrement a bien été supprimé';
                 } 
                 else 
                 {
@@ -176,7 +176,7 @@
             $supprimer2 = $supprimer2->execute();
                 if($supprimer2)
                 {
-                    echo 'votre enregistrement a bien été supprimé';
+                    echo 'Votre enregistrement a bien été supprimé';
                     
                 
                 } else
@@ -304,26 +304,110 @@
     {
         $bdd=connect();
                       
-            $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, louer.date_debut_Louer
+            $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_debut_Louer
             FROM vehicules
-            INNER JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules where louer.retour_Louer=0 AND  louer.date_debut_Louer>NOW()');
+            LEFT JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
+            WHERE (retour_Louer = 0 and louer.date_debut_Louer> now()) or (louer.id_Vehicules IS NULL) or retour_Louer = 1
+            GROUP BY vehicules.id_Vehicules');
         
             while($donnees = $recup->fetch())
             {
-                echo $donnees['id_Vehicules'];
-                echo $donnees['type_Vehicules'];
-                echo $donnees['modele_Vehicules'];
-                echo $donnees['immatriculation_Vehicules'];
-                echo $donnees['date_debut_Louer'];
-             
-        
-                }     
+                if(($donnees['retour_Louer']=='1')||($donnees['retour_Louer']==NULL)){
+                    echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['immatriculation_Vehicules'].'</td><td>+de 30 jours</td></tr>';
+                }
+                else{
+                $now=time();
+                $debutloc=$donnees['date_debut_Louer'];
+                $dispo=ceil((strtotime($debutloc) - $now)/86400);
+                echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['immatriculation_Vehicules'].'</td><td>'.$dispo.' jours</td></tr>';
+                }
+            }
+    
         }  
 
+        function aff_voitdispoFront() 
+        {
+            $bdd=connect();
+                          
+                $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_debut_Louer
+                FROM vehicules
+                LEFT JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
+                WHERE (retour_Louer = 0 and louer.date_debut_Louer> now()) or (louer.id_Vehicules IS NULL) or retour_Louer = 1
+                GROUP BY vehicules.id_Vehicules');
+            
+                while($donnees = $recup->fetch())
+                {
+                    if(($donnees['retour_Louer']=='1')||($donnees['retour_Louer']==NULL)){
+                        switch($donnees['modele_Vehicules']){
+                            case "Fiat 500";
+                            echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/fiat500.png" alt="Fiat 500" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité + de 30 jours</p></div></div>';
+                            break;
+                            case "Renault Clio";
+                            echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/clio.png" alt="clio" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité + de 30 jours</p></div></div>';
+                            break;
+                            case "Peugeot 308";
+                            echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/308.png" alt="308" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité + de 30 jours</p></div></div>';
+                            break;
+                            case "Renault Scénic";
+                            echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/scenic.png" alt="scenic" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité + de 30 jours</p></div></div>';
+                            break;
+                            case "Peugeot 5008";
+                            echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/5008.png" alt="5008" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité + de 30 jours</p></div></div>';
+                            break;
+                            case "Peugeot expert 12m3";
+                            echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/expert.png" alt="expert" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité + de 30 jours</p></div></div>';
+                            break;
+                            case "Iveco daily 20m3";
+                            echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/Iveco.png" alt="Iveco" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité + de 30 jours</p></div></div>';
+                            break;
+                        }
+                        
+                    }
+                    else{
+                    $now=time();
+                    $debutloc=$donnees['date_debut_Louer'];
+                    $dispo=ceil((strtotime($debutloc) - $now)/86400);
+                    switch($donnees['modele_Vehicules']){
+                        case "Fiat 500";
+                        echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/fiat500.png" alt="Fiat 500" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité '.$dispo.' jour(s)</p></div></div>';
+                        break;
+                        case "Renault Clio";
+                        echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/clio.png" alt="clio" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité '.$dispo.' jour(s)</p></div></div>';
+                        break;
+                        case "Peugeot 308";
+                        echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/308.png" alt="308" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité '.$dispo.' jour(s)</p></div></div>';
+                        break;
+                        case "Renault Scénic";
+                        echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/scenic.png" alt="scenic" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité '.$dispo.' jour(s)</p></div></div>';
+                        break;
+                        case "Peugeot 5008";
+                        echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/5008.png" alt="5008" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité '.$dispo.' jour(s)</p></div></div>';
+                        break;
+                        case "Peugeot expert 12m3";
+                        echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/expert.png" alt="expert" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité '.$dispo.' jour(s)</p></div></div>';
+                        break;
+                        case "Iveco daily 20m3";
+                        echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/Iveco.png" alt="Iveco" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité '.$dispo.' jour(s)</p></div></div>';
+                        break;
+                   
+                    }
+                }
+            }      
+            }        
 // function date_jour()
 // {
 //     $date=(int(date('j, n, Y')));
 //     return $date;
+// }
+// function NbJours($debut, $fin) {
+
+//     $tDeb = explode("-", $debut);
+//     $tFin = explode("-", $fin);
+
+//     $diff = mktime(0, 0, 0, $tFin[1], $tFin[2], $tFin[0]) - 
+//             mktime(0, 0, 0, $tDeb[1], $tDeb[2], $tDeb[0]);
+    
+//     return(($diff / 86400)+1);
 // }
 
 function liste_déroulante_client()
