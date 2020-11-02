@@ -314,7 +314,8 @@
             $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_debut_Louer 
             FROM vehicules
             LEFT JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
-            WHERE (retour_Louer = 0 and louer.date_debut_Louer> now()) or (louer.id_Vehicules IS NULL) or retour_Louer = 1');
+            WHERE (retour_Louer = 0 and louer.date_debut_Louer> now()) or (louer.id_Vehicules IS NULL) or retour_Louer = 1
+            GROUP BY vehicules.id_Vehicules');
             while($donnees = $recup->fetch())
             {
 
@@ -328,7 +329,52 @@
                 }
        
             }
-        }   
+        } 
+        function aff_voit_en_location() 
+    {
+        $bdd=connect();
+        
+            $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_debut_Louer 
+            FROM vehicules
+            LEFT JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
+            WHERE (retour_Louer = 0 and louer.date_fin_Louer> now())');
+            while($donnees = $recup->fetch())
+            {
+
+                if( $donnees['retour_Louer']==1){
+            
+                $status = "checked";
+                }
+                else{
+            
+                    $status = "test";
+                }
+       
+            }
+        } 
+        function aff_voitrouge() 
+    {
+        $bdd=connect();
+        
+            $recup= $bdd->query('SELECT vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_fin_Louer
+            FROM vehicules
+            LEFT JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules 
+            WHERE (retour_Louer = 0 and louer.date_fin_Louer< now())');
+            while($donnees = $recup->fetch())
+            {
+
+                if( $donnees['retour_Louer']==1){
+            
+                $status = "checked";
+                }
+                else{
+            
+                    $status = "test";
+                }
+       
+            }
+        }
+          
 
 
 function liste_déroulante_client()
