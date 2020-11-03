@@ -8,10 +8,10 @@
            <div class="col-12 d-flex justify-content-center">
                <h1 style="padding-top:20px"> Etat du parc automobile à la date du <?php echo date('j M Y'); ?></h1>
            </div>
-           <div class="col-12">
+           <div class="col-12 my-5">
                <h2>Véhicules disponibles à la location</h2>
                <table class="table table-hover table-sm">
-                   <thead class="table-success text-center" >
+                   <thead class="table-success text-center">
                        <tr>
                            <th scope="col">Id Vehicule</th>
                            <th scope="col">Véhicule</th>
@@ -20,16 +20,44 @@
                        </tr>
                    </thead>
                    <tbody>
-                   <?php aff_voitdispo()?>
+                       <?php aff_voitdispo()?>
                    </tbody>
                </table>
            </div>
-           <?php
-           aff_voit_en_location();
-           aff_voitrouge();
-           ?>
+           <div class="col-12 my-5">
+               <h2>Véhicules en cours de location</h2>
+               <table class="table table-hover table-sm">
+                   <thead class="table-warning text-center">
+                       <tr>
+                           <th scope="col">Réference Location</th>
+                           <th scope="col">Véhicule</th>
+                           <th scope="col">Nom Client</th>
+                           <th scope="col">Date de fin de location</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       <?php aff_voit_en_location()?>
+                   </tbody>
+               </table>
+           </div>
+           <div class="col-12 my-5">
+               <h2>Véhicules non rendus suite fin de location</h2>
+               <table class="table table-hover table-sm">
+                   <thead class="table-danger text-center">
+                       <tr>
+                           <th scope="col">Référence Location</th>
+                           <th scope="col">Véhicule</th>
+                           <th scope="col">Nom Client</th>
+                           <th scope="col">Date de fin de location</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       <?php aff_voitrouge();?>
+                   </tbody>
+               </table>
+           </div>
        </div>
-   </div>
+   
    <?php
       include 'footer.php';
 ?>

@@ -479,15 +479,14 @@ function aff_voit_en_location() //voiture en cour de location
     {
         $bdd=connect();
         
-            $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_debut_Louer, date_fin_Louer
+            $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, Nom_Clients, id_location, retour_Louer, date_debut_Louer, date_fin_Louer
             FROM vehicules
-            LEFT JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
+            INNER JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
+            INNER JOIN clients ON louer.id_Clients = clients.id_Clients
             WHERE (retour_Louer = 0 and louer.date_fin_Louer> now()) and (retour_Louer = 0 and louer.date_debut_Louer< now())');
-            echo 'Véhicules en location</br>';
             while($donnees = $recup->fetch())
             {
-            echo $donnees['id_Vehicules'];
-            echo $donnees['modele_Vehicules'];  
+                echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['Nom_Clients'].'</td><td>'.$donnees['date_fin_Louer'].'</td></tr>';
             }
        
             }
@@ -501,11 +500,9 @@ function aff_voit_en_location() //voiture en cour de location
             INNER JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules 
             INNER JOIN clients ON louer.id_Clients = clients.id_Clients 
             WHERE (retour_Louer = 0 and louer.date_fin_Louer<now())');
-            echo 'Véhicules en retard</br>';
             while($donnees = $recup->fetch())
             {
-            echo $donnees['id_Vehicules'];
-            echo $donnees['date_fin_Louer'];  
+                echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['Nom_Clients'].'</td><td>'.$donnees['date_fin_Louer'].'</td></tr>';
             }
        
             }

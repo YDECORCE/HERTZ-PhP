@@ -30,9 +30,7 @@
                             value="ajouterv">Ajouter</button>
                     </div>
                 </form>
-                <?php
-ajouterv();
-?>
+                <?php ajouterv(); ?>
             </div>
             <div class="col-12 col-lg-6 ">
                 <img src="Img\driving-2732934_1920.jpg" alt="image" class="img-fluid">
@@ -50,9 +48,7 @@ ajouterv();
 aff_voiture();
 modifiv();
 supriv();
-aff_voitdispo()
 ?>
-
     </div>
     <?php
 include 'footer.php';
