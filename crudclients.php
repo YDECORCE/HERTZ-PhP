@@ -30,18 +30,31 @@
         </div>
 
         <div class="container py-5">
-        <div class="d-flex">
-            <input class='form-control length_crud_Cl bg_entete_tab' style='width:5%' value='Id'>
-            <input class='form-control length_crud_Cl bg_entete_tab' style='width:14%' value='Nom'>
-            <input class='form-control length_crud_Cl bg_entete_tab' style='width:14%' value='Prénom'>
-            <input class='form-control length_crud_Cl bg_entete_tab' style='width:20%' value='Adresse'>
-            <input class='form-control length_crud_Cl bg_entete_tab' style='width:7%' value='CP'>
-            <input class='form-control length_crud_Cl bg_entete_tab' style='width:20%' value='Ville'>
-        </div>
-
+                <form>
+        <div class='d-flex'>
+        <table class="table table-hover table-sm">
+                   <thead class="table-warning text-center">
+                       <tr>
+                           <th scope="col" style="width:5%">Id</th>
+                           <th scope="col" style="width:10%">Nom</th>
+                           <th scope="col" style="width:10%">Prénom</th>
+                           <th scope="col" style="width:20%">Adresse</th>
+                           <th scope="col" style="width:10%">CP</th>
+                           <th scope="col" style="width:15%">Ville</th>
+                           <th>&nbsp;</th>
+                           <th>&nbsp;</th>
+                           <th>&nbsp;</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       <?php aff_client()?>
+                   </tbody>
+               </table>
+               </form>
+                </div>
         <?php
 ajouterc();
-aff_client();
+
 modific();
 supric();
 

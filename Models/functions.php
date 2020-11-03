@@ -211,20 +211,16 @@
         $recuperation = $bdd->query('SELECT * FROM clients');
        
          while ($client = $recuperation->fetch()) {
-         echo "<form><div class='d-flex'> <input class='form-control length_crud_Cl' style='width:5%' type='text' name='id' value='".$client['id_Clients']."'>
-        <input class='form-control length_crud_Cl' style='width:14%' type='text' name='nom' value='".$client['Nom_Clients']."'>
-        <input class='form-control length_crud_Cl' style='width:14%' type='text' name='prenom' value='".$client['Prenom_Clients']."'>
-        <input class='form-control length_crud_Cl' style='width:20%' type='text' name='adresse' value='".$client['adresse_Clients']."'>
-        <input class='form-control length_crud_Cl' style='width:7%' type='text' name='cp' value='".$client['CP_Clients']."'>
-        <input class='form-control length_crud_Cl' style='width:20%' type='text' name='ville' value='".$client['Ville_Clients']."'>
+         echo " <tr><td><input class='form-control'  type='text' name='id' value='".$client['id_Clients']."'></td>
+        <td><input class='form-control'  type='text' name='nom' value='".$client['Nom_Clients']."'></td>
+        <td><input class='form-control'  type='text' name='prenom' value='".$client['Prenom_Clients']."'></td>
+        <td><input class='form-control'  type='text' name='adresse' value='".$client['adresse_Clients']."'></td>
+        <td><input class='form-control'  type='text' name='cp' value='".$client['CP_Clients']."'></td>
+        <td><input class='form-control'  type='text' name='ville' value='".$client['Ville_Clients']."'></td>
         
-         <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
-         <button class='btn btn_jaune btn-primary' type='submit' value='historique' name='action'>Historique</button>
-        <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>
-        
-         </form>
-        
-         </div>";
+         <td><button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button></td>
+         <td><button class='btn btn_jaune btn-primary' type='submit' value='historique' name='action'>Historique</button></td>
+        <td><button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button></td></tr>";
 
         }
     }
@@ -305,10 +301,10 @@
     {
         $bdd=connect();
                       
-            $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_debut_Louer
+            $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_debut_Louer, date_fin_Louer
             FROM vehicules
             LEFT JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
-            WHERE (retour_Louer = 0 and louer.date_debut_Louer> now()) or (louer.id_Vehicules IS NULL) or retour_Louer = 1
+            WHERE (retour_Louer = 0 and louer.date_debut_Louer> now() and (not louer.date_debut_Louer< now()> louer.date_fin_Louer)) or (louer.id_Vehicules IS NULL) or retour_Louer = 1
             GROUP BY vehicules.id_Vehicules');
             while($donnees = $recup->fetch())
             {
