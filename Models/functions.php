@@ -34,7 +34,7 @@
             
                 if($estceok)
                 {
-                    echo 'Votre enregistrement a été ajouté avec succès <br>';
+                    echo 'votre enregistrement a été ajouté avec succès <br>';
                 } 
                 else 
                 {
@@ -56,7 +56,7 @@
             $estceok = $ajouter2->execute();
         
                 if($estceok){
-                    echo 'Votre enregistrement a été ajouté avec succès <br>';
+                    echo 'votre enregistrement a été ajouté avec succès <br>';
                 } else {
                     echo 'Veuillez recommencer svp, une erreur est survenue <br>';
                 }
@@ -79,7 +79,7 @@
             
                 if($estceok)
                 {
-                    echo 'Votre enregistrement a été ajouté avec succès <br>';
+                    echo 'votre enregistrement a été ajouté avec succès <br>';
                 } 
                 else 
                 {
@@ -109,7 +109,7 @@
             // die;
                 if($modifierv2)
                 {
-                    echo 'Votre enregistrement a bien été modifié';
+                    echo 'votre enregistrement a bien été modifié';
                 } 
                 else 
                 {
@@ -134,7 +134,7 @@
             $modifierc2 = $modifierc2->execute();
             
                 if($modifierc2){
-                    echo 'Votre enregistrement a bien été modifié';
+                    echo 'votre enregistrement a bien été modifié';
                 } 
                 else 
                 {
@@ -155,7 +155,7 @@
             $supprimer = $supprimer->execute();
                 if($supprimer)
                 {
-                    echo 'Votre enregistrement a bien été supprimé';
+                    echo 'votre enregistrement a bien été supprimé';
                 } 
                 else 
                 {
@@ -176,7 +176,7 @@
             $supprimer2 = $supprimer2->execute();
                 if($supprimer2)
                 {
-                    echo 'Votre enregistrement a bien été supprimé';
+                    echo 'votre enregistrement a bien été supprimé';
                     
                 
                 } else
@@ -219,7 +219,6 @@
         <input class='form-control length_crud_Cl' style='width:20%' type='text' name='ville' value='".$client['Ville_Clients']."'>
         
          <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
-         <button class='btn btn_jaune btn-primary' type='submit' value='historique' name='action'>Historique</button>
         <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>
         
          </form>
@@ -248,13 +247,14 @@
                 $status = "test";
             }
             
-            echo "<form><div class='d-flex'><input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idl' value='".$donnees['id_location']."'> <input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idc' value='".$donnees['id_Clients']."'>
+            echo "<form><div class='d-flex'><input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idl' value='".$donnees['id_location']."'> 
+            <input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idc' value='".$donnees['id_Clients']."'>
             <input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idv' value='".$donnees['id_Vehicules']."'>
-            <input class='form-control length_crud_Cl' style='width:15%' type='text' name='nom' value='".$donnees['Nom_Clients']."'>
-            <input class='form-control length_crud_Cl' style='width:15%' type='text' name='vehicule' value='".$donnees['modele_Vehicules']."'>
-            <input class='form-control length_crud_Cl' style='width:15%' type='text' name='immat' value='".$donnees['immatriculation_Vehicules']."'>
-            <input class='form-control length_crud_Cl' style='width:18%' type='date' name='debut' value='".$donnees['date_debut_Louer']."'>
-            <input class='form-control length_crud_Cl' style='width:18%' type='date' name='fin' value='".$donnees['date_fin_Louer']."'>
+            <input class='form-control length_crud_Cl' style='width:12%' type='text' name='nom' value='".$donnees['Nom_Clients']."'>
+            <input class='form-control length_crud_Cl' style='width:12%' type='text' name='vehicule' value='".$donnees['modele_Vehicules']."'>
+            <input class='form-control length_crud_Cl' style='width:12%' type='text' name='immat' value='".$donnees['immatriculation_Vehicules']."'>
+            <input class='form-control length_crud_Cl' style='width:16%' type='date' name='debut' value='".$donnees['date_debut_Louer']."'>
+            <input class='form-control length_crud_Cl' style='width:16%' type='date' name='fin' value='".$donnees['date_fin_Louer']."'>
             <input class='form-control length_crud_Cl' style='width:10%' type='checkbox' name='retour' value='1'" . $status .">
                        
             <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
@@ -268,147 +268,101 @@
     function aff_historique() 
     {
         $bdd=connect();
-        if(isset($_GET['action']) && $_GET['action']=="historique")
-                {
-            $nom_client = $_GET['nom'];
-            $prenom_client = $_GET['prenom'];
-            $client = $_GET['id'];        
-            $recup= $bdd->prepare('SELECT clients.id_Clients, Nom_Clients, Prenom_Clients, id_location, date_debut_Louer, date_fin_Louer, retour_Louer, vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules
+        $button = $_GET['nom du boutton'];
+        if(isset($_GET[$button]) && $_GET[$button]=="historique")
+        {
+            $recup= $bdd->query('SELECT clients.id_Clients, Nom_Clients, Prenom_Clients, id_location, date_debut_Louer, date_fin_Louer, retour_Louer, vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules
             FROM clients
             INNER JOIN louer ON clients.id_Clients = louer.id_Clients
-            INNER JOIN vehicules ON louer.id_Vehicules = vehicules.id_Vehicules WHERE louer.retour_Louer=1 AND clients.id_Clients= :client');
-            $recup->bindParam(':client', $client);
-            $recup->execute();
-            
-            echo '<div class="container my-5">
-            <h2 class=" text-center py-5"> Historique client</h2>
-            <table class="table">
-                <thead class="bg_entete_tab">
-                    <tr>
-                        <th scope="col">Véhicule</th>
-                        <th scope="col">Immatriculation</th>
-                        <th scope="col">Début de Location</th>
-                        <th scope="col">Début de Location</th>
-                    </tr>
-                </thead>
-                <tbody>';
-                
+            INNER JOIN vehicules ON louer.id_Vehicules = vehicules.id_Vehicules WHERE louer.retour_Louer=1 AND clients.id client= louer.id_Clients');
+        
             while($donnees = $recup->fetch())
             {
-                echo '<tr class=" text-center"><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['immatriculation_Vehicules'].'</td><td>'.$donnees['date_debut_Louer'].'</td><td>'.$donnees['date_fin_Louer'].'</td></tr>';
-         }
-         echo'</tbody></table></div>';
+
+                if( $donnees['retour_Louer']==1){
+            
+                $status = "checked";
+                }
+                else{
+            
+                    $status = "test";
+                }
+                
+               
+            }
         }
     }
 
     function aff_voitdispo() //voiture disponible
     {
         $bdd=connect();
-                      
-            $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_debut_Louer
+        
+            $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_debut_Louer 
             FROM vehicules
             LEFT JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
             WHERE (retour_Louer = 0 and louer.date_debut_Louer> now()) or (louer.id_Vehicules IS NULL) or retour_Louer = 1
             GROUP BY vehicules.id_Vehicules');
             while($donnees = $recup->fetch())
             {
-                if(($donnees['retour_Louer']=='1')||($donnees['retour_Louer']==NULL)){
-                    echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['immatriculation_Vehicules'].'</td><td>+de 30 jours</td></tr>';
+
+                if( $donnees['retour_Louer']==1){
+            
+                $status = "checked";
                 }
                 else{
-                $now=time();
-                $debutloc=$donnees['date_debut_Louer'];
-                $dispo=ceil((strtotime($debutloc) - $now)/86400);
-                echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['immatriculation_Vehicules'].'</td><td>'.$dispo.' jours</td></tr>';
-                }
-            }
-    
-        }  
-
-        function aff_voitdispoFront() 
-        {
-            $bdd=connect();
-                          
-                $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_debut_Louer
-                FROM vehicules
-                LEFT JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
-                WHERE (retour_Louer = 0 and louer.date_debut_Louer> now()) or (louer.id_Vehicules IS NULL) or retour_Louer = 1
-                GROUP BY vehicules.id_Vehicules');
             
-                while($donnees = $recup->fetch())
-                {
-                    if(($donnees['retour_Louer']=='1')||($donnees['retour_Louer']==NULL)){
-                        switch($donnees['modele_Vehicules']){
-                            case "Fiat 500";
-                            echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/fiat500.png" alt="Fiat 500" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité + de 30 jours</p></div></div>';
-                            break;
-                            case "Renault Clio";
-                            echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/clio.png" alt="clio" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité + de 30 jours</p></div></div>';
-                            break;
-                            case "Peugeot 308";
-                            echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/308.png" alt="308" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité + de 30 jours</p></div></div>';
-                            break;
-                            case "Renault Scénic";
-                            echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/scenic.png" alt="scenic" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité + de 30 jours</p></div></div>';
-                            break;
-                            case "Peugeot 5008";
-                            echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/5008.png" alt="5008" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité + de 30 jours</p></div></div>';
-                            break;
-                            case "Peugeot expert 12m3";
-                            echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/expert.png" alt="expert" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité + de 30 jours</p></div></div>';
-                            break;
-                            case "Iveco daily 20m3";
-                            echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/Iveco.png" alt="Iveco" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité + de 30 jours</p></div></div>';
-                            break;
-                        }
-                        
-                    }
-                    else{
-                    $now=time();
-                    $debutloc=$donnees['date_debut_Louer'];
-                    $dispo=ceil((strtotime($debutloc) - $now)/86400);
-                    switch($donnees['modele_Vehicules']){
-                        case "Fiat 500";
-                        echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/fiat500.png" alt="Fiat 500" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité '.$dispo.' jour(s)</p></div></div>';
-                        break;
-                        case "Renault Clio";
-                        echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/clio.png" alt="clio" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité '.$dispo.' jour(s)</p></div></div>';
-                        break;
-                        case "Peugeot 308";
-                        echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/308.png" alt="308" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité '.$dispo.' jour(s)</p></div></div>';
-                        break;
-                        case "Renault Scénic";
-                        echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/scenic.png" alt="scenic" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité '.$dispo.' jour(s)</p></div></div>';
-                        break;
-                        case "Peugeot 5008";
-                        echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/5008.png" alt="5008" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité '.$dispo.' jour(s)</p></div></div>';
-                        break;
-                        case "Peugeot expert 12m3";
-                        echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/expert.png" alt="expert" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité '.$dispo.' jour(s)</p></div></div>';
-                        break;
-                        case "Iveco daily 20m3";
-                        echo'<div class="col-12 col-sm-6 col-lg-3"><div class="ficheauto"><img src="Img/Iveco.png" alt="Iveco" style="max-height:100px"><p style="font-weight: bolder">'.$donnees['modele_Vehicules'].'</><p>'.$donnees['type_Vehicules'].'</p>'.$donnees['immatriculation_Vehicules'].'<p></p><p>Disponibilité '.$dispo.' jour(s)</p></div></div>';
-                        break;
-                   
-                    }
+                    $status = "test";
                 }
-            }      
-            }        
-// function date_jour()
-// {
-//     $date=(int(date('j, n, Y')));
-//     return $date;
-// }
-// function NbJours($debut, $fin) {
+       
+            }
+        } 
+        function aff_voit_en_location() //voiture en cour de location
+    {
+        $bdd=connect();
+        
+            $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_debut_Louer, date_fin_Louer
+            FROM vehicules
+            LEFT JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
+            WHERE (retour_Louer = 0 and louer.date_fin_Louer> now()) and (retour_Louer = 0 and louer.date_debut_Louer< now())');
+            while($donnees = $recup->fetch())
+            {
 
-//     $tDeb = explode("-", $debut);
-//     $tFin = explode("-", $fin);
+                if( $donnees['retour_Louer']==1){
+            
+                $status = "checked";
+                }
+                else{
+            
+                    $status = "test";
+                }
+       
+            }
+        } 
+        function aff_voitrouge() //voiture qui n'a pas été rendu
+    {
+        $bdd=connect();
+        
+            $recup= $bdd->query('SELECT vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_fin_Louer, clients.id_Clients, Nom_Clients, Prenom_Clients, adresse_Clients, CP_Clients, Ville_Clients
+            FROM vehicules
+            INNER JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules 
+            INNER JOIN clients ON louer.id_Clients = clients.id_Clients 
+            WHERE (retour_Louer = 0 and louer.date_fin_Louer< now())');
+            while($donnees = $recup->fetch())
+            {
 
-//     $diff = mktime(0, 0, 0, $tFin[1], $tFin[2], $tFin[0]) - 
-//             mktime(0, 0, 0, $tDeb[1], $tDeb[2], $tDeb[0]);
-    
-//     return(($diff / 86400)+1);
-// }
+                if( $donnees['retour_Louer']==1){
+            
+                $status = "checked";
+                }
+                else{
+            
+                    $status = "test";
+                }
+       
+            }
+        }
+          
+
 
 function liste_déroulante_client()
 {
@@ -475,35 +429,3 @@ function liste_déroulante_client()
             </script>';
         }
 }
-function aff_voit_en_location() //voiture en cour de location
-    {
-        $bdd=connect();
-        
-            $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, Nom_Clients, id_location, retour_Louer, date_debut_Louer, date_fin_Louer
-            FROM vehicules
-            INNER JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
-            INNER JOIN clients ON louer.id_Clients = clients.id_Clients
-            WHERE (retour_Louer = 0 and louer.date_fin_Louer> now()) and (retour_Louer = 0 and louer.date_debut_Louer< now())');
-            while($donnees = $recup->fetch())
-            {
-                echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['Nom_Clients'].'</td><td>'.$donnees['date_fin_Louer'].'</td></tr>';
-            }
-       
-            }
-        
-        function aff_voitrouge() //voiture qui n'a pas été rendu
-    {
-        $bdd=connect();
-        
-            $recup= $bdd->query('SELECT vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_fin_Louer, clients.id_Clients, Nom_Clients, Prenom_Clients, adresse_Clients, CP_Clients, Ville_Clients
-            FROM vehicules
-            INNER JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules 
-            INNER JOIN clients ON louer.id_Clients = clients.id_Clients 
-            WHERE (retour_Louer = 0 and louer.date_fin_Louer<now())');
-            while($donnees = $recup->fetch())
-            {
-                echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['Nom_Clients'].'</td><td>'.$donnees['date_fin_Louer'].'</td></tr>';
-            }
-       
-            }
-    
