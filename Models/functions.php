@@ -192,17 +192,12 @@
        
          while ($voit = $recuperation->fetch()) 
         {
-            echo "<form><div class='d-flex'> <input class='form-control length_crud_veh' type='text' name='id' value='".$voit['id_Vehicules']."'>
-            <input class='form-control length_crud_veh' type='text' name='type' value='".$voit['type_Vehicules']."'>
-            <input class='form-control length_crud_veh' type='text' name='modele' value='".$voit['modele_Vehicules']."'>
-            <input class='form-control length_crud_veh' type='text' name='immat' value='".$voit['immatriculation_Vehicules']."'>
-            
-            <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
-            <button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button>
-            
-            </form>
-            
-            </div>";
+            echo "<form><tr><td><input class='form-control' type='text' name='id' value='".$voit['id_Vehicules']."'></td>
+            <td><input class='form-control' type='text' name='type' value='".$voit['type_Vehicules']."'></td>
+            <td><input class='form-control' type='text' name='modele' value='".$voit['modele_Vehicules']."'></td>
+            <td><input class='form-control' type='text' name='immat' value='".$voit['immatriculation_Vehicules']."'></td>
+            <td><button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button></td>
+            <td><button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button></td></tr></form>";
 
         }
     }
@@ -211,16 +206,15 @@
         $recuperation = $bdd->query('SELECT * FROM clients');
        
          while ($client = $recuperation->fetch()) {
-         echo " <tr><td><input class='form-control'  type='text' name='id' value='".$client['id_Clients']."'></td>
+         echo " <form><tr><td><input class='form-control'  type='text' name='id' value='".$client['id_Clients']."'></td>
         <td><input class='form-control'  type='text' name='nom' value='".$client['Nom_Clients']."'></td>
         <td><input class='form-control'  type='text' name='prenom' value='".$client['Prenom_Clients']."'></td>
         <td><input class='form-control'  type='text' name='adresse' value='".$client['adresse_Clients']."'></td>
         <td><input class='form-control'  type='text' name='cp' value='".$client['CP_Clients']."'></td>
         <td><input class='form-control'  type='text' name='ville' value='".$client['Ville_Clients']."'></td>
-        
-         <td><button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button></td>
-         <td><button class='btn btn_jaune btn-primary' type='submit' value='historique' name='action'>Historique</button></td>
-        <td><button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button></td></tr>";
+        <td><button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button></td>
+        <td><button class='btn btn_jaune btn-primary' type='submit' value='historique' name='action'>Historique</button></td>
+        <td><button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button></td></tr></form>";
 
         }
     }
@@ -244,20 +238,16 @@
                 $status = "test";
             }
             
-            echo "<form><div class='d-flex'><input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idl' value='".$donnees['id_location']."'> <input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idc' value='".$donnees['id_Clients']."'>
-            <input hidden class='form-control length_crud_Cl' style='width:10%' type='text' name='idv' value='".$donnees['id_Vehicules']."'>
-            <input class='form-control length_crud_Cl' style='width:15%' type='text' name='nom' value='".$donnees['Nom_Clients']."'>
-            <input class='form-control length_crud_Cl' style='width:15%' type='text' name='vehicule' value='".$donnees['modele_Vehicules']."'>
-            <input class='form-control length_crud_Cl' style='width:15%' type='text' name='immat' value='".$donnees['immatriculation_Vehicules']."'>
-            <input class='form-control length_crud_Cl' style='width:18%' type='date' name='debut' value='".$donnees['date_debut_Louer']."'>
-            <input class='form-control length_crud_Cl' style='width:18%' type='date' name='fin' value='".$donnees['date_fin_Louer']."'>
-            <input class='form-control length_crud_Cl' style='width:10%' type='checkbox' name='retour' value='1'" . $status .">
-                       
-            <button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button>
-                       
-            </form>
-            
-            </div>";
+            echo "<form><input hidden class='form-control' type='text' name='idc' value='".$donnees['id_Clients']."'>
+            <input hidden class='form-control' type='text' name='idv' value='".$donnees['id_Vehicules']."'>
+            <tr><td><input class='form-control' type='text' name='idl' value='".$donnees['id_location']."'></td> 
+            <td><input class='form-control' type='text' name='nom' value='".$donnees['Nom_Clients']."'></td>
+            <td><input class='form-control' type='text' name='vehicule' value='".$donnees['modele_Vehicules']."'></td>
+            <td><input class='form-control' type='text' name='immat' value='".$donnees['immatriculation_Vehicules']."'></td>
+            <td><input class='form-control' type='date' name='debut' value='".$donnees['date_debut_Louer']."'></td>
+            <td><input class='form-control' type='date' name='fin' value='".$donnees['date_fin_Louer']."'></td>
+            <td><input class='form-control' type='checkbox' name='retour' value='1'" . $status ."></td>                
+            <td><button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button></td></tr></form>";
 
         }
     }
