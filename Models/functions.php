@@ -297,23 +297,13 @@
     {
         $bdd=connect();
         
-            $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_debut_Louer, date_fin_Louer
-            FROM vehicules
-            LEFT JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
-            WHERE (retour_Louer = 0 and louer.date_debut_Louer> now()) or (retour_Louer = 0 and louer.date_debut_Louer< now()>louer.date_fin_Louer) or (louer.id_Vehicules IS NULL) or retour_Louer = 1
-            GROUP BY vehicules.id_Vehicules');
-            while($donnees = $recup->fetch())
+            $recup= $bdd->query('SELECT id_Vehicules FROM louer WHERE retour_Louer = 0 and louer.date_debut_Louer> now()');
+            $id=$recup->fetchAll();
+            $id_list=implode("','",$id);
+            $sql="SELECT * from vehicules WHERE id_Vehicules NOT IN ('$id_list')
+            while($donnees = $sql->fetch())
             {
-
-                if( $donnees['retour_Louer']==1){
-            
-                $status = "checked";
-                }
-                else{
-            
-                    $status = "test";
-                }
-       
+                echo $donnees['id_Vehicules'];
             }
         } 
         function aff_voit_en_location() //voiture en cour de location
