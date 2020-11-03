@@ -28,7 +28,7 @@
 
     <div class="container py-5">
                    <table class="table table-hover table-sm">
-                <thead class="table-warning text-center">
+                <thead class="bg_entete_tab text-center">
                     <tr>
                         <th scope="col" style="width:5%">Id</th>
                         <th scope="col" style="width:10%">Nom</th>
