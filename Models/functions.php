@@ -286,32 +286,42 @@
          echo'</tbody></table></div>';
         }
     }
-
-    function aff_voitdispo() //voiture disponible
-    {
-        $bdd=connect();
+function requete_vehicules_dispo()
+{
+    $bdd=connect();
         $recup= $bdd->query('SELECT id_Vehicules FROM louer WHERE retour_Louer = 0 and louer.date_debut_Louer< now()');
         $id=$recup->fetchAll();
         $id_list=implode(', ', array_column($id, 'id_Vehicules'));
-        $sql= $bdd->query('SELECT * from vehicules WHERE id_Vehicules NOT IN ('.$id_list.')');
+        $sql= $bdd->query('SELECT vehicules.*, louer.retour_Louer, louer.date_debut_Louer  
+        from vehicules 
+        LEFT JOIN louer ON vehicules.id_Vehicules=louer.id_Vehicules 
+        WHERE (vehicules.id_Vehicules NOT IN ('.$id_list.')) GROUP BY vehicules.id_Vehicules');
+        return $sql;
+}
+
+
+    function aff_voitdispo() //voiture disponible
+    {
+        $sql=requete_vehicules_dispo();
         while($donnees = $sql->fetch())
         {
-            echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['type_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['immatriculation_Vehicules'].'</td></tr>';
+            if(($donnees['retour_Louer']=='1')||($donnees['retour_Louer']==NULL)){
+            echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['type_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['immatriculation_Vehicules'].'</td><td>Plus de 30 jours</td></tr>';
         }
-    
-        }  
+    else {
+        $now=time();
+                    $debutloc=$donnees['date_debut_Louer'];
+                    $dispo=ceil((strtotime($debutloc) - $now)/86400);
+                    echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['type_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['immatriculation_Vehicules'].'</td><td>'.$dispo.' jours</td></tr>';
+    }
+        } 
+    } 
 
         function aff_voitdispoFront() 
-        {
-            $bdd=connect();
-                          
-                $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_debut_Louer
-                FROM vehicules
-                LEFT JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
-                WHERE (retour_Louer = 0 and louer.date_debut_Louer> now()) or (louer.id_Vehicules IS NULL) or retour_Louer = 1
-                GROUP BY vehicules.id_Vehicules');
-            
-                while($donnees = $recup->fetch())
+        {    
+            $sql=requete_vehicules_dispo();
+
+                while($donnees = $sql->fetch())
                 {
                     if(($donnees['retour_Louer']=='1')||($donnees['retour_Louer']==NULL)){
                         switch($donnees['modele_Vehicules']){
@@ -399,8 +409,7 @@ function liste_déroulante_client()
     }
 
     function liste_déroulante_vehicule(){
-        $bdd=connect();
-        $reponse = $bdd->query('SELECT * FROM vehicules');
+        $reponse = requete_vehicules_dispo();
         echo'<select class="custom-select my-2" name="idv">';
         echo'<option value="NULL">Choisir le véhicule</option>';
         while ($donnees = $reponse->fetch()) {
@@ -462,7 +471,10 @@ function aff_voit_en_location() //voiture en cour de location
             WHERE (retour_Louer = 0 and louer.date_fin_Louer> now()) and (retour_Louer = 0 and louer.date_debut_Louer< now())');
             while($donnees = $recup->fetch())
             {
-                echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['Nom_Clients'].'</td><td>'.$donnees['date_fin_Louer'].'</td></tr>';
+                $now=time();
+                $fin_loc=$donnees['date_fin_Louer'];
+                $retour=ceil((strtotime($fin_loc)-$now)/86400);
+                echo '<tr class="text-center"><td>'.$donnees['id_location'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['Nom_Clients'].'</td><td>'.$donnees['date_fin_Louer'].'</td><td>'.$retour.' jours</td></tr>';
             }
        
             }
@@ -478,7 +490,10 @@ function aff_voit_en_location() //voiture en cour de location
             WHERE (retour_Louer = 0 and louer.date_fin_Louer<now())');
             while($donnees = $recup->fetch())
             {
-                echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['Nom_Clients'].'</td><td>'.$donnees['date_fin_Louer'].'</td></tr>';
+                $now=time();
+                $fin_loc=$donnees['date_fin_Louer'];
+                $retard=ceil(($now-strtotime($fin_loc))/86400);
+                echo '<tr class="text-center"><td>'.$donnees['id_location'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['Nom_Clients'].'</td><td>'.$donnees['date_fin_Louer'].'</td><td>'.$retard.' jours</td></tr>';
             }
        
             }

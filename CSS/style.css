@@ -57,8 +57,12 @@
       min-height: 100vh;
   }
   .ficheauto{
-    border: 2px solid rgb(255,208,4);
+    -webkit-box-shadow: 7px 10px 3px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 7px 10px 3px 1px rgba(0,0,0,0.75);
+    box-shadow: 7px 10px 3px 1px rgba(0,0,0,0.75);
+    background-color: rgb(255,208,4);
+    border-radius: 0px 0px 31px 0px;
     margin: 5px;
-   text-align: center;
+    text-align: center;
          
   }
