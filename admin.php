@@ -14,9 +14,10 @@
                    <thead class="table-success text-center">
                        <tr>
                            <th scope="col">Id Vehicule</th>
+                           <th scope="col">Type Véhicule</th>
                            <th scope="col">Véhicule</th>
                            <th scope="col">Immatriculation</th>
-                           <th scope="col">Durée de disponibilité</th>
+                           
                        </tr>
                    </thead>
                    <tbody>

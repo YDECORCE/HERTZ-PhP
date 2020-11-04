@@ -290,24 +290,14 @@
     function aff_voitdispo() //voiture disponible
     {
         $bdd=connect();
-                      
-            $recup= $bdd->query('SELECT vehicules.id_Vehicules, type_Vehicules, modele_Vehicules, immatriculation_Vehicules, id_location, retour_Louer, date_debut_Louer, date_fin_Louer
-            FROM vehicules
-            LEFT JOIN louer ON vehicules.id_Vehicules = louer.id_Vehicules
-            WHERE (retour_Louer = 0 and louer.date_debut_Louer> now() and (not louer.date_debut_Louer< now()> louer.date_fin_Louer)) or (louer.id_Vehicules IS NULL) or retour_Louer = 1
-            GROUP BY vehicules.id_Vehicules');
-            while($donnees = $recup->fetch())
-            {
-                if(($donnees['retour_Louer']=='1')||($donnees['retour_Louer']==NULL)){
-                    echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['immatriculation_Vehicules'].'</td><td>+de 30 jours</td></tr>';
-                }
-                else{
-                $now=time();
-                $debutloc=$donnees['date_debut_Louer'];
-                $dispo=ceil((strtotime($debutloc) - $now)/86400);
-                echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['immatriculation_Vehicules'].'</td><td>'.$dispo.' jours</td></tr>';
-                }
-            }
+        $recup= $bdd->query('SELECT id_Vehicules FROM louer WHERE retour_Louer = 0 and louer.date_debut_Louer< now()');
+        $id=$recup->fetchAll();
+        $id_list=implode(', ', array_column($id, 'id_Vehicules'));
+        $sql= $bdd->query('SELECT * from vehicules WHERE id_Vehicules NOT IN ('.$id_list.')');
+        while($donnees = $sql->fetch())
+        {
+            echo '<tr class="text-center"><td>'.$donnees['id_Vehicules'].'</td><td>'.$donnees['type_Vehicules'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['immatriculation_Vehicules'].'</td></tr>';
+        }
     
         }  
 
