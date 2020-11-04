@@ -37,15 +37,26 @@
             </div>
         </div>
     </div>
-    <div class="container mb-5">
-        <div class="d-flex">
-            <input class='form-control length_crud_veh bg_entete_tab' value='Identifiant Véhicule'>
-            <input class='form-control length_crud_veh bg_entete_tab' value='Type de Véhicule'>
-            <input class='form-control length_crud_veh bg_entete_tab' value='Modèle de Véhicule'>
-            <input class='form-control length_crud_veh bg_entete_tab' value='Immatriculation'>
-        </div>
-        <?php
-aff_voiture();
+    <div class="container py-5">
+        
+            <table class="table table-hover table-sm">
+                <thead class="bg_entete_tab text-center">
+                    <tr>
+                        <th scope="col" style="width:20%">Id</th>
+                        <th scope="col" style="width:20%">Type de Véhicule</th>
+                        <th scope="col" style="width:20%">Modèle Véhicule</th>
+                        <th scope="col" style="width:20%">Immatriculation</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php aff_voiture()?>
+                </tbody>
+            </table>
+        
+    </div>
+<?php
 modifiv();
 supriv();
 ?>

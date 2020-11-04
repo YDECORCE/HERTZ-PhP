@@ -19,26 +19,30 @@
             </div>
         </form>
     </div>    
-    
-    <div class="container d-flex" style="flex-wrap:wrap">
-        <!-- <input class='form-control length_crud_Cl bg_entete_tab' style='width:10%' value='Id Client'>
-        <input class='form-control length_crud_Cl bg_entete_tab' style='width:10%' value='Id véhicule'> -->
-        <input class='form-control length_crud_Cl bg_entete_tab' style='width:15%' value='Nom'>
-        <input class='form-control length_crud_Cl bg_entete_tab' style='width:15%' value='Modèle'>
-        <input class='form-control length_crud_Cl bg_entete_tab' style='width:15%' value='Immatriculation'>
-        <input class='form-control length_crud_Cl bg_entete_tab' style='width:18%' value='début location'>
-        <input class='form-control length_crud_Cl bg_entete_tab' style='width:18%' value='fin location'>
-        <input class='form-control length_crud_Cl bg_entete_tab' style='width:10%' value='retour'>
-        
-  
-
+    <div class="container py-5">
+                    <table class="table table-hover table-sm">
+                <thead class="bg_entete_tab text-center">
+                    <tr>
+                        <th scope="col" style="width:5%">Id Location</th>
+                        <th scope="col" style="width:15%">Nom</th>
+                        <th scope="col" style="width:15%">Modèle</th>
+                        <th scope="col" style="width:10%">Immatriculation</th>
+                        <th scope="col" style="width:20%">début location</th>
+                        <th scope="col" style="width:20%">fin location</th>
+                        <th scope="col" style="width:5%">Retour</th>
+                        <th>&nbsp;</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    <?php aff_louer()?>
+                </tbody>
+            </table>
+            </div>
     <?php
-
-aff_louer();
 modifil();
 ajouterl();
 ?>
-</div>
+
 </div>
     <?php
 include 'footer.php';

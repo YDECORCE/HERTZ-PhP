@@ -14,9 +14,11 @@
                    <thead class="table-success text-center">
                        <tr>
                            <th scope="col">Id Vehicule</th>
+                           <th scope="col">Type Véhicule</th>
                            <th scope="col">Véhicule</th>
                            <th scope="col">Immatriculation</th>
-                           <th scope="col">Durée de disponibilité</th>
+                           <th scope="col">disponibilité</th>
+                           
                        </tr>
                    </thead>
                    <tbody>
@@ -33,6 +35,7 @@
                            <th scope="col">Véhicule</th>
                            <th scope="col">Nom Client</th>
                            <th scope="col">Date de fin de location</th>
+                           <th scope="col">Délai avant retour</th>
                        </tr>
                    </thead>
                    <tbody>
@@ -49,6 +52,7 @@
                            <th scope="col">Véhicule</th>
                            <th scope="col">Nom Client</th>
                            <th scope="col">Date de fin de location</th>
+                           <th scope="col">Retard</th>
                        </tr>
                    </thead>
                    <tbody>
