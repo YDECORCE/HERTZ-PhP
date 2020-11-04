@@ -300,12 +300,13 @@
             $recup= $bdd->query('SELECT id_Vehicules FROM louer WHERE retour_Louer = 0 and louer.date_debut_Louer> now()');
             $id=$recup->fetchAll();
             $id_list=implode("','",$id);
-            $sql="SELECT * from vehicules WHERE id_Vehicules NOT IN ('$id_list')
-            while($donnees = $sql->fetch())
+            $sql=$bdd->query("SELECT * from vehicules WHERE id_Vehicules NOT IN ('$id_list')');
+            while( $sql->fetch())
             {
-                echo $donnees['id_Vehicules'];
+                echo $sql['id_Vehicules'];
             }
         } 
+
         function aff_voit_en_location() //voiture en cour de location
     {
         $bdd=connect();
