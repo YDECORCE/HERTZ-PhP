@@ -1,28 +1,67 @@
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <title>Hertz - Lons le Saunier</title>
-</head>
-<body>
    <?php
-   include 'header.php';
-   require 'Models/functions.php';
+    $titrepage='Parc automobile';
+    include 'header.php';
+    require 'Models/functions.php';
    ?>
-<div class="container">
-<div class="col-12 d-flex justify-content-center mt-5">
-    <h1> Etat du parc automobile à la date du <?php echo date('d-m-Y'); ?></h1>
-</div>
-</div>
-
-<?php
-
-include 'footer.php';
+   <div class="bg">
+       <div class="container bgblanc">
+           <div class="col-12 d-flex justify-content-center">
+               <h1 style="padding-top:20px"> Etat du parc automobile à la date du <?php echo date('j M Y'); ?></h1>
+           </div>
+           <div class="col-12 my-5">
+               <h2>Véhicules disponibles à la location</h2>
+               <table class="table table-hover table-sm">
+                   <thead class="table-success text-center">
+                       <tr>
+                           <th scope="col">Id Vehicule</th>
+                           <th scope="col">Type Véhicule</th>
+                           <th scope="col">Véhicule</th>
+                           <th scope="col">Immatriculation</th>
+                           <th scope="col">disponibilité</th>
+                           
+                       </tr>
+                   </thead>
+                   <tbody>
+                       <?php aff_voitdispo()?>
+                   </tbody>
+               </table>
+           </div>
+           <div class="col-12 my-5">
+               <h2>Véhicules en cours de location</h2>
+               <table class="table table-hover table-sm">
+                   <thead class="table-warning text-center">
+                       <tr>
+                           <th scope="col">Réference Location</th>
+                           <th scope="col">Véhicule</th>
+                           <th scope="col">Nom Client</th>
+                           <th scope="col">Date de fin de location</th>
+                           <th scope="col">Délai avant retour</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       <?php aff_voit_en_location()?>
+                   </tbody>
+               </table>
+           </div>
+           <div class="col-12 my-5">
+               <h2>Véhicules non rendus suite fin de location</h2>
+               <table class="table table-hover table-sm">
+                   <thead class="table-danger text-center">
+                       <tr>
+                           <th scope="col">Référence Location</th>
+                           <th scope="col">Véhicule</th>
+                           <th scope="col">Nom Client</th>
+                           <th scope="col">Date de fin de location</th>
+                           <th scope="col">Retard</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       <?php aff_voitrouge();?>
+                   </tbody>
+               </table>
+           </div>
+       </div>
+   
+   <?php
+      include 'footer.php';
 ?>
-</body>
