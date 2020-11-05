@@ -47,7 +47,7 @@
   .bg {
     
     background-image: url("../Img/road-220058_1280.jpg");
-    min-height: 100%; 
+    min-height: 100vh; 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -64,5 +64,18 @@
     border-radius: 0px 0px 31px 0px;
     margin: 5px;
     text-align: center;
-         
+    transition: transform 0.5s;
+           
   }
+  .ficheauto:hover{
+    transform: scale(1.1);
+  }
+  .bgblancdiv{
+    background-color: rgba(255,255,255,0.8);
+      }
+
+h1{
+    padding-top:20px;
+    text-align: center!important;
+    text-shadow: .1em .1em .1em rgba(255, 255, 255, 0.9);
+}

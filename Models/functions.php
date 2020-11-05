@@ -251,6 +251,55 @@
 
         }
     }
+
+    function aff_location_indivuel($idclient) 
+    {
+        $bdd=connect();
+        $recup= $bdd->prepare('SELECT clients.id_Clients, id_location,  date_fin_Louer,  vehicules.id_Vehicules, modele_Vehicules, type_Vehicules, immatriculation_Vehicules
+        FROM clients
+        INNER JOIN louer ON clients.id_Clients = louer.id_Clients
+        INNER JOIN vehicules ON louer.id_Vehicules = vehicules.id_Vehicules
+        WHERE (louer.retour_Louer=0 and clients.id_Clients= :id)');
+        $recup->bindParam(':id', $idclient, PDO::PARAM_STR);
+        $recup->execute();
+        $controle=$recup->fetchall();
+        if (empty($controle)) 
+        {
+            echo 'Pas de location en cours';
+        }
+        else{ 
+            echo'<div class="container my-5 collapse multi-collapse bgblancdiv" id="location_active">
+            <h2 class=" text-center py-5">Véhicules en cours de location</h2><table class="table table-hover table-sm">
+            <thead class="bg_entete_tab">
+                <tr>
+                    <th scope="col">Réference Location</th>
+                    <th scope="col">Type de véhicule</th>
+                    <th scope="col">Modèle</th>
+                    <th scope="col">Date de fin de location</th>
+                    <th scope="col">Délai avant retour</th>
+                </tr>
+            </thead>
+            <tbody>';
+        foreach($controle as $donnees)
+        {   
+            $now=time();               
+            $fin_loc=strtotime($donnees['date_fin_Louer']);
+            if($fin_loc>=$now){
+            $retour=ceil(($fin_loc-$now)/86400).' jours';}
+            else {$retour='Retard de '.ceil(($now-$fin_loc)/86400).' jours';}     
+            echo "<tr class='text-center'><td>".$donnees['id_location']."</td>
+            <td>".$donnees['type_Vehicules']."</td>
+            <td>".$donnees['modele_Vehicules']."</td>
+            <td>".$donnees['date_fin_Louer']."</td>
+            <td>".$retour."</td></tr>
+            ";
+        }
+        echo '</tbody>
+               </table>
+               </div>';
+    }
+   }   
+
     function aff_historique() 
     {
         $bdd=connect();
@@ -267,14 +316,14 @@
             $recup->execute();
             
             echo '<div class="container my-5">
-            <h2 class=" text-center py-5"> Historique client</h2>
+            <h2 class=" text-center py-5"> Historique '.$prenom_client.' '.$nom_client.'</h2>
             <table class="table">
                 <thead class="bg_entete_tab">
                     <tr>
                         <th scope="col">Véhicule</th>
                         <th scope="col">Immatriculation</th>
                         <th scope="col">Début de Location</th>
-                        <th scope="col">Début de Location</th>
+                        <th scope="col">Fin de location de Location</th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -286,6 +335,37 @@
          echo'</tbody></table></div>';
         }
     }
+
+    function aff_historique_client($id_client)
+    {
+        $bdd=connect(); 
+            $recup= $bdd->prepare('SELECT clients.id_Clients, Nom_Clients, Prenom_Clients, id_location, date_debut_Louer, date_fin_Louer, retour_Louer, vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules
+            FROM clients
+            INNER JOIN louer ON clients.id_Clients = louer.id_Clients
+            INNER JOIN vehicules ON louer.id_Vehicules = vehicules.id_Vehicules WHERE louer.retour_Louer=1 AND clients.id_Clients= :client');
+            $recup->bindParam(':client', $id_client);
+            $recup->execute();
+            
+            echo '<div class="container collapse multi-collapse my-5 bgblancdiv" id="historique_client">
+            <h2 class=" text-center py-5"> Historique de vos locations</h2>
+            <table class="table">
+                <thead class="bg_entete_tab">
+                    <tr>
+                        <th scope="col">Véhicule</th>
+                        <th scope="col">Immatriculation</th>
+                        <th scope="col">Début de Location</th>
+                        <th scope="col">Fin de location de Location</th>
+                    </tr>
+                </thead>
+                <tbody>';
+                
+            while($donnees = $recup->fetch())
+            {
+                echo '<tr class=" text-center"><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['immatriculation_Vehicules'].'</td><td>'.$donnees['date_debut_Louer'].'</td><td>'.$donnees['date_fin_Louer'].'</td></tr>';
+         }
+         echo'</tbody></table></div>';
+        }
+    
 function requete_vehicules_dispo()
 {
     $bdd=connect();
@@ -454,7 +534,8 @@ function liste_déroulante_client()
         
         }
 
-        function refresh($url){
+        function refresh($url)
+        {
             echo '<script language="Javascript">
             document.location.replace("'.$url.'");
             </script>';
@@ -497,4 +578,13 @@ function aff_voit_en_location() //voiture en cour de location
             }
        
             }
-    
+ function detailclient($idclient)
+ {
+    $bdd=connect();
+    $recuperation = $bdd->query('SELECT * FROM clients where clients.id_Clients='.$idclient.'');
+    // $recuperation->debugDumpParams();
+    $client = $recuperation->fetch();
+
+    return $client;
+
+ }   

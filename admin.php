@@ -6,7 +6,7 @@
    <div class="bg">
        <div class="container bgblanc">
            <div class="col-12 d-flex justify-content-center">
-               <h1 style="padding-top:20px"> Etat du parc automobile à la date du <?php echo date('j M Y'); ?></h1>
+               <h1> Etat du parc automobile à la date du <?php echo date('j M Y'); ?></h1>
            </div>
            <div class="col-12 my-5">
                <h2>Véhicules disponibles à la location</h2>
@@ -43,9 +43,9 @@
                    </tbody>
                </table>
            </div>
-           <div class="col-12 my-5">
+           <div class="col-12 mt-5 pb-5">
                <h2>Véhicules non rendus suite fin de location</h2>
-               <table class="table table-hover table-sm">
+               <table class="table table-hover table-sm ">
                    <thead class="table-danger text-center">
                        <tr>
                            <th scope="col">Référence Location</th>
