@@ -62,6 +62,25 @@
                 }
     }
     }
+    function ajouter_client()
+    {
+        $bdd=connect();
+        if(isset($_GET['ajouter']) && !empty($_GET['nom'])  && !empty($_GET['prenom'])  && !empty($_GET['adresse']) && !empty($_GET['cp']) && !empty($_GET['ville'])) {
+            $ajouter2 = $bdd->prepare('INSERT INTO clients (id_Clients, Nom_Clients, Prenom_Clients, adresse_Clients, CP_Clients, Ville_Clients  ) VALUES (:Nom_Clients, :Prenom_Clients, :adresse_Clients, :CP_Clients, :Ville_Clients)');
+            $ajouter2->bindParam(':Nom_Clients', $_GET['nom'],PDO::PARAM_STR);
+            $ajouter2->bindParam(':Prenom_Clients', $_GET['prenom'],PDO::PARAM_STR);
+            $ajouter2->bindParam(':adresse_Clients', $_GET['adresse'],PDO::PARAM_STR);
+            $ajouter2->bindParam(':CP_Clients', $_GET['cp'],PDO::PARAM_STR);
+            $ajouter2->bindParam(':Ville_Clients', $_GET['ville'],PDO::PARAM_STR);
+            $estceok = $ajouter2->execute();
+        
+                if($estceok){
+                    echo 'votre enregistrement a été ajouté avec succès <br>';
+                } else {
+                    echo 'Veuillez recommencer svp, une erreur est survenue <br>';
+                }
+    }
+    }
     function ajouterl()
     {
         $bdd=connect();

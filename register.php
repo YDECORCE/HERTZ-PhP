@@ -58,11 +58,11 @@ if(!empty($_POST)){
     
     $recq=$bdd->prepare("INSERT INTO users SET username = ?, passworde = ?, email= ?, confirmation_token = ? ");
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-    $token= str_random(60);
+    // $token= str_random(60);
     $recq->execute([$_POST['username'], $password, $_POST['email'], $token]);
-    $user_id= $bdd->lastInsertId();
-    mail($_POST['email'], 'confimation de votre compte', "Afin de validé votre compte merci de cliqué sur ce lien\n\n http://localhost/HERTZ-PHP/HERTZ-PHP/confirm.php?id=$user_id&token=$token");
-    
+    // $user_id= $bdd->lastInsertId();
+    // mail($_POST['email'], 'confimation de votre compte', "Afin de validé votre compte merci de cliqué sur ce lien\n\n http://localhost/HERTZ-PHP/HERTZ-PHP/confirm.php?id=$user_id&token=$token");
+    header('location: confirm.php');
     exit();
    
     
