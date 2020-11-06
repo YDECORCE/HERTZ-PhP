@@ -31,7 +31,8 @@
     <?php
 ajouterc();
 
-
+session_start();
+    $_SESSION[$données];
 
 ?>
     </div>
