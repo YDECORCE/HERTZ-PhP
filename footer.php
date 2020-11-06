@@ -1,3 +1,4 @@
+</div>
 <footer>
     <div class="container-fluid bgfooter">
         <div class="row align-items-center justify-content-end bgfooter">

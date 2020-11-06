@@ -35,7 +35,7 @@ function ajouterv() //fonction ajout d'un véhicule
             
                 if($estceok)
                 {
-                    echo 'Votre enregistrement a été ajouté avec succès <br>';
+                    echo 'votre enregistrement a été ajouté avec succès <br>';
                 } 
                 else 
                 {
@@ -57,7 +57,26 @@ function ajouterc() //fonction ajout d'un client
             $estceok = $ajouter2->execute();
         
                 if($estceok){
-                    echo 'Votre enregistrement a été ajouté avec succès <br>';
+                    echo 'votre enregistrement a été ajouté avec succès <br>';
+                } else {
+                    echo 'Veuillez recommencer svp, une erreur est survenue <br>';
+                }
+    }
+    }
+    function ajouter_client()
+    {
+        $bdd=connect();
+        if(isset($_GET['ajouter']) && !empty($_GET['nom'])  && !empty($_GET['prenom'])  && !empty($_GET['adresse']) && !empty($_GET['cp']) && !empty($_GET['ville'])) {
+            $ajouter2 = $bdd->prepare('INSERT INTO clients (id_Clients, Nom_Clients, Prenom_Clients, adresse_Clients, CP_Clients, Ville_Clients  ) VALUES (:Nom_Clients, :Prenom_Clients, :adresse_Clients, :CP_Clients, :Ville_Clients)');
+            $ajouter2->bindParam(':Nom_Clients', $_GET['nom'],PDO::PARAM_STR);
+            $ajouter2->bindParam(':Prenom_Clients', $_GET['prenom'],PDO::PARAM_STR);
+            $ajouter2->bindParam(':adresse_Clients', $_GET['adresse'],PDO::PARAM_STR);
+            $ajouter2->bindParam(':CP_Clients', $_GET['cp'],PDO::PARAM_STR);
+            $ajouter2->bindParam(':Ville_Clients', $_GET['ville'],PDO::PARAM_STR);
+            $estceok = $ajouter2->execute();
+        
+                if($estceok){
+                    echo 'votre enregistrement a été ajouté avec succès <br>';
                 } else {
                     echo 'Veuillez recommencer svp, une erreur est survenue <br>';
                 }
@@ -78,7 +97,7 @@ function ajouterl() //fonction ajout d'une location
             
                 if($estceok)
                 {
-                    echo 'Votre enregistrement a été ajouté avec succès <br>';
+                    echo 'votre enregistrement a été ajouté avec succès <br>';
                 } 
                 else 
                 {
@@ -106,7 +125,7 @@ function modifiv() //fonction modification d'un véhicule
 
                 if($modifierv2)
                 {
-                    echo 'Votre enregistrement a bien été modifié';
+                    echo 'votre enregistrement a bien été modifié';
                 } 
                 else 
                 {
@@ -153,7 +172,7 @@ function supriv()//fonction suppression d'un véhicule
             $supprimer = $supprimer->execute();
                 if($supprimer)
                 {
-                    echo 'Votre enregistrement a bien été supprimé';
+                    echo 'votre enregistrement a bien été supprimé';
                 } 
                 else 
                 {
@@ -174,7 +193,7 @@ function supric() //fonction suppression d'un client
             $supprimer2 = $supprimer2->execute();
                 if($supprimer2)
                 {
-                    echo 'Votre enregistrement a bien été supprimé';
+                    echo 'votre enregistrement a bien été supprimé';
                     
                 
                 } else
@@ -303,12 +322,10 @@ function aff_location_indivuel($idclient) //Boucle d'affichage des locations en 
 function aff_historique() //Boucle d'affichage des anciennes location pour tous les clients
     {
         $bdd=connect();
-        if(isset($_GET['action']) && $_GET['action']=="historique")
-                {
-            $nom_client = $_GET['nom'];
-            $prenom_client = $_GET['prenom'];
-            $client = $_GET['id'];        
-            $recup= $bdd->prepare('SELECT clients.id_Clients, Nom_Clients, Prenom_Clients, id_location, date_debut_Louer, date_fin_Louer, retour_Louer, vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules
+        $button = $_GET['nom du boutton'];
+        if(isset($_GET[$button]) && $_GET[$button]=="historique")
+        {
+            $recup= $bdd->query('SELECT clients.id_Clients, Nom_Clients, Prenom_Clients, id_location, date_debut_Louer, date_fin_Louer, retour_Louer, vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules
             FROM clients
             INNER JOIN louer ON clients.id_Clients = louer.id_Clients
             INNER JOIN vehicules ON louer.id_Vehicules = vehicules.id_Vehicules WHERE louer.retour_Louer=1 AND clients.id_Clients= :client');
@@ -330,9 +347,18 @@ function aff_historique() //Boucle d'affichage des anciennes location pour tous 
                 
             while($donnees = $recup->fetch())
             {
-                echo '<tr class=" text-center"><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['immatriculation_Vehicules'].'</td><td>'.$donnees['date_debut_Louer'].'</td><td>'.$donnees['date_fin_Louer'].'</td></tr>';
-         }
-         echo'</tbody></table></div>';
+
+                if( $donnees['retour_Louer']==1){
+            
+                $status = "checked";
+                }
+                else{
+            
+                    $status = "test";
+                }
+                
+               
+            }
         }
     }
 
