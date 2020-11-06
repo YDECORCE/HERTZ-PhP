@@ -50,7 +50,7 @@
     <?php
 ajouterc();
 
-modific();
+modific('crudclients.php');
 supric();
 
 ?>

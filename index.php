@@ -1,4 +1,5 @@
 <?php
+$titrepage='Bienvenue chez Hertz';
 include 'header_log.php';
 require 'Models/functions.php';
 ?>

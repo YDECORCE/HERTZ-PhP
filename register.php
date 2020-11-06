@@ -1,4 +1,3 @@
-
 <?php
 
 function connect()
@@ -70,48 +69,61 @@ if(!empty($_POST)){
     
 }
 ?>
-<?php require 'header_log.php'; 
+
+<?php 
+$titrepage='Création compte';
+require 'header_client.php'; 
     
 ?>
+<div class="container-fluid bg">
+    <div class="container bgblanc">
 
-<h1>s'inscrire</h1>
+        <h1 class="text-center">S'inscrire</h1>
+        <div class="row w-100 justify-content-center mx-0">
+            <div class="col-12 col-lg-8 d-flex justify-content-center w-100" style="flex-wrap:wrap">
 
-<?php if(!empty($errors)): ?>
-    <div class="alert alert-danger">
-        <p>Vous n'avez pas rempli le formulaire correctement</p>
-        <ul>
-            <?php foreach($errors as $errors): ?>
-                <li><?= $errors; ?></li>
-            
-            <?php endforeach; ?> 
-        </ul>
+                
+
+                <form class="w-100" action="" method="POST">
+
+                    <div class="form-group">
+                        <label for="">Pseudo</label>
+                        <input type="text" name="username" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Email</label>
+                        <input type="text" name="email" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">mot de passe</label>
+                        <input type="password" name="password" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">confirmer votre mot de passe</label>
+                        <input type="password" name="password_confirm" class="form-control" />
+                    </div>
+                    <div style="text-align:center">
+                        <button type="submit" class="btn btn_jaune mb-0"> M'inscrire</button>
+                    </div>
+                </form>
+                <div class="col-12 col-lg-8 d-flex justify-content-center w-100" style="flex-wrap:wrap">
+                            <?php if(!empty($errors)): ?>
+                            <div class="alert alert-danger">
+                                <p>Vous n'avez pas rempli le formulaire correctement</p>
+                                <ul>
+                                    <?php foreach($errors as $errors): ?>
+                                    <li><?= $errors; ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                            <?php endif; ?>
+                </div>
+            </div>
+
+        </div>
     </div>
-
-<?php endif; ?>
-
-<form action="" method="POST">
-
-    <div class="form-group">
-        <label for="">Pseudo</label>
-        <input type="text" name="username" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label for="">Email</label>
-        <input type="text" name="email" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label for="">mot de passe</label>
-        <input type="password" name="password" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label for="">confirmer votre mot de passe</label>
-        <input type="password" name="password_confirm" class="form-control" />
-    </div>
-
-    <button type="submit" class="btn btn-primary mb-"> M'inscrire</button>
-</form>
-
+</div>
 <?php require 'footer.php'; ?>

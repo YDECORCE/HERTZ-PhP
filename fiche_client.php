@@ -1,6 +1,6 @@
 <?php
     $titrepage='Fiche clients';
-   include 'header.php';
+   include 'header_client.php';
    require ('Models/functions.php');
 //    $id_client=$_POST['idc'];
     $id_client=2;
@@ -48,7 +48,7 @@
 </div>
 </div>
 <?php
-modific();
+modific('fiche_client.php');
 ?>
 <div class="container-fluid">
   <div class="row w-100 mx-0">

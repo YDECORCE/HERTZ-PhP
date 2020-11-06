@@ -134,7 +134,7 @@ function modifiv() //fonction modification d'un véhicule
         }
 
     }
-function modific() //fonction modification d'un client
+function modific($url) //fonction modification d'un client
     {
         $bdd=connect();
        
@@ -151,7 +151,7 @@ function modific() //fonction modification d'un client
             
                 if($modifierc2){
                     echo 'Votre enregistrement a bien été modifié';
-                    refresh('crudclients.php'); 
+                    refresh($url); 
                 } 
                 else 
                 {
@@ -321,46 +321,39 @@ function aff_location_indivuel($idclient) //Boucle d'affichage des locations en 
 
 function aff_historique() //Boucle d'affichage des anciennes location pour tous les clients
     {
-        $bdd=connect();
-        $button = $_GET['nom du boutton'];
-        if(isset($_GET[$button]) && $_GET[$button]=="historique")
-        {
-            $recup= $bdd->query('SELECT clients.id_Clients, Nom_Clients, Prenom_Clients, id_location, date_debut_Louer, date_fin_Louer, retour_Louer, vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules
-            FROM clients
-            INNER JOIN louer ON clients.id_Clients = louer.id_Clients
-            INNER JOIN vehicules ON louer.id_Vehicules = vehicules.id_Vehicules WHERE louer.retour_Louer=1 AND clients.id_Clients= :client');
-            $recup->bindParam(':client', $client);
-            $recup->execute();
-            
-            echo '<div class="container my-5" id="histo">
-            <h2 class=" text-center py-5"> Historique '.$prenom_client.' '.$nom_client.'</h2>
-            <table class="table" >
-                <thead class="bg_entete_tab">
-                    <tr>
-                        <th scope="col">Véhicule</th>
-                        <th scope="col">Immatriculation</th>
-                        <th scope="col">Début de Location</th>
-                        <th scope="col">Fin de location de Location</th>
-                    </tr>
-                </thead>
-                <tbody>';
-                
-            while($donnees = $recup->fetch())
+    $bdd=connect();
+    if(isset($_GET['action']) && $_GET['action']=="historique")
             {
-
-                if( $donnees['retour_Louer']==1){
+        $nom_client = $_GET['nom'];
+        $prenom_client = $_GET['prenom'];
+        $client = $_GET['id'];        
+        $recup= $bdd->prepare('SELECT clients.id_Clients, Nom_Clients, Prenom_Clients, id_location, date_debut_Louer, date_fin_Louer, retour_Louer, vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules
+        FROM clients
+        INNER JOIN louer ON clients.id_Clients = louer.id_Clients
+        INNER JOIN vehicules ON louer.id_Vehicules = vehicules.id_Vehicules WHERE louer.retour_Louer=1 AND clients.id_Clients= :client');
+        $recup->bindParam(':client', $client);
+        $recup->execute();
+        
+        echo '<div class="container my-5" id="histo">
+        <h2 class=" text-center py-5"> Historique '.$prenom_client.' '.$nom_client.'</h2>
+        <table class="table" >
+            <thead class="bg_entete_tab">
+                <tr>
+                    <th scope="col">Véhicule</th>
+                    <th scope="col">Immatriculation</th>
+                    <th scope="col">Début de Location</th>
+                    <th scope="col">Fin de location de Location</th>
+                </tr>
+            </thead>
+            <tbody>';
             
-                $status = "checked";
-                }
-                else{
-            
-                    $status = "test";
-                }
-                
-               
-            }
-        }
+        while($donnees = $recup->fetch())
+        {
+            echo '<tr class=" text-center"><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['immatriculation_Vehicules'].'</td><td>'.$donnees['date_debut_Louer'].'</td><td>'.$donnees['date_fin_Louer'].'</td></tr>';
+     }
+     echo'</tbody></table></div>';
     }
+    }   
 
 function aff_historique_client($id_client)//Boucle d'affichage des anciennes location pour un client donnée ($id_client)
     {
