@@ -1,5 +1,5 @@
 <?php
-    function connect()
+function connect() //fonction de connextion à la base
     {
         try
         {
@@ -13,14 +13,15 @@
         }
     }
         
-
-
-        
-
-        
-   
+function refresh($url) //fonction de rafraichissement d'une page
+    {
+        echo '<script language="Javascript">
+        document.location.replace("'.$url.'");
+        </script>';
+    }
+ 
     
-    function ajouterv()
+function ajouterv() //fonction ajout d'un véhicule
     {
         $bdd=connect();
         if(isset($_GET['ajouter']))
@@ -43,7 +44,7 @@
             }
     }
 
-    function ajouterc()
+function ajouterc() //fonction ajout d'un client
     {
         $bdd=connect();
         if(isset($_GET['ajouter'])&& !empty($_GET['nom'])  && !empty($_GET['prenom'])  && !empty($_GET['adresse']) && !empty($_GET['cp']) && !empty($_GET['ville'])) {
@@ -62,7 +63,7 @@
                 }
     }
     }
-    function ajouterl()
+function ajouterl() //fonction ajout d'une location
     {
         $bdd=connect();
         if(isset($_GET['ajouter']))
@@ -74,8 +75,6 @@
             $ajouter->bindParam(':date_fin_Louer', $_GET['fin'],PDO::PARAM_STR);
             $ajouter->bindParam(':date_debut_Louer', $_GET['debut'],PDO::PARAM_STR);
             $estceok=$ajouter->execute();
-            // $ajouter->debugDumpParams();
-            //  die;
             
                 if($estceok)
                 {
@@ -92,12 +91,11 @@
                 </script>';
             }
     }
-    function modifiv() 
+function modifiv() //fonction modification d'un véhicule 
     {
         $bdd=connect();
         if(isset($_GET['action']) && $_GET['action']=="modifier"  && !empty($_GET['id'])  && !empty($_GET['type'])  && !empty($_GET['modele']) && !empty($_GET['immat']))
         {
-            $message = '';
             $modifierv2 = $bdd->prepare('UPDATE vehicules SET id_Vehicules = :id_Vehicules, type_Vehicules = :type_Vehicules, modele_Vehicules = :modele_Vehicules, immatriculation_Vehicules = :immatriculation WHERE id_Vehicules =:id_Vehicules');
             $modifierv2->bindParam(':id_Vehicules', $_GET['id'], PDO::PARAM_STR);
             $modifierv2->bindParam(':type_Vehicules', $_GET['type'], PDO::PARAM_STR);
@@ -105,8 +103,7 @@
             $modifierv2->bindParam(':immatriculation', $_GET['immat'], PDO::PARAM_STR);        
                
             $modifierv2 = $modifierv2->execute();
-            // $modifier->debugDumpParams();
-            // die;
+
                 if($modifierv2)
                 {
                     echo 'Votre enregistrement a bien été modifié';
@@ -118,7 +115,7 @@
         }
 
     }
-    function modific() 
+function modific() //fonction modification d'un client
     {
         $bdd=connect();
        
@@ -135,6 +132,7 @@
             
                 if($modifierc2){
                     echo 'Votre enregistrement a bien été modifié';
+                    refresh('crudclients.php'); 
                 } 
                 else 
                 {
@@ -143,7 +141,7 @@
         }
 
     }
-    function supriv()
+function supriv()//fonction suppression d'un véhicule
     {
         $bdd=connect();
         if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['id'])){
@@ -163,7 +161,7 @@
                 }
             }
     }
-    function supric()
+function supric() //fonction suppression d'un client
     {
         $bdd=connect();
         if(isset($_GET['action']) && $_GET['action']=="supprimer" && !empty($_GET['id']))
@@ -185,7 +183,7 @@
                 }
         }
     }
-     function aff_voiture() 
+function aff_voiture() //Boucle d'affichage du CRUD véhicules
     {
         $bdd=connect();
         $recuperation = $bdd->query('SELECT * FROM vehicules');
@@ -196,12 +194,13 @@
             <td><input class='form-control' type='text' name='type' value='".$voit['type_Vehicules']."'></td>
             <td><input class='form-control' type='text' name='modele' value='".$voit['modele_Vehicules']."'></td>
             <td><input class='form-control' type='text' name='immat' value='".$voit['immatriculation_Vehicules']."'></td>
-            <td><button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button></td>
-            <td><button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button></td></tr></form>";
+            <td><button class='btn btn_jaune btn-primary' onclick='window.location.hash=\"CRUD_vehicule\";' type='submit' value='modifier' name='action'>Modifier</button></td>
+            <td><button class='btn btn-danger' onclick='window.location.hash=\"CRUD_vehicule\";' type='submit' value='supprimer' name='action'>Supprimer</button></td></tr></form>";
 
         }
     }
-    function aff_client() {
+function aff_client() //Boucle d'affichage du CRUD clients
+    {
         $bdd=connect();
         $recuperation = $bdd->query('SELECT * FROM clients');
        
@@ -212,13 +211,12 @@
         <td><input class='form-control'  type='text' name='adresse' value='".$client['adresse_Clients']."'></td>
         <td><input class='form-control'  type='text' name='cp' value='".$client['CP_Clients']."'></td>
         <td><input class='form-control'  type='text' name='ville' value='".$client['Ville_Clients']."'></td>
-        <td><button class='btn btn_jaune btn-primary' type='submit' value='modifier' name='action'>Modifier</button></td>
-        <td><button class='btn btn_jaune btn-primary' type='submit' value='historique' name='action'>Historique</button></td>
+        <td><button class='btn btn_jaune btn-primary' onclick='window.location.hash=\"CRUD_client\";' type='submit' value='modifier' name='action'>Modifier</button></td>
+        <td><button class='btn btn_jaune btn-primary' onclick='window.location.hash=\"histo\";' type='submit' value='historique' name='action'>Historique</button></td>
         <td><button class='btn btn-danger' type='submit' value='supprimer' name='action'>Supprimer</button></td></tr></form>";
-
         }
-    }
-    function aff_louer() 
+            }
+function aff_louer() //Boucle d'affichage des locations en cours pour tous les clients
     {
         $bdd=connect();
         $recup= $bdd->query('SELECT clients.id_Clients, Nom_Clients, Prenom_Clients, id_location, date_debut_Louer, date_fin_Louer, retour_Louer, vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules
@@ -252,7 +250,7 @@
         }
     }
 
-    function aff_location_indivuel($idclient) 
+function aff_location_indivuel($idclient) //Boucle d'affichage des locations en cours pour un client donnée ($id_client)
     {
         $bdd=connect();
         $recup= $bdd->prepare('SELECT clients.id_Clients, id_location,  date_fin_Louer,  vehicules.id_Vehicules, modele_Vehicules, type_Vehicules, immatriculation_Vehicules
@@ -284,8 +282,10 @@
         {   
             $now=time();               
             $fin_loc=strtotime($donnees['date_fin_Louer']);
-            if($fin_loc>=$now){
-            $retour=ceil(($fin_loc-$now)/86400).' jours';}
+            if($fin_loc>=$now)
+            {
+            $retour=ceil(($fin_loc-$now)/86400).' jours';
+            }
             else {$retour='Retard de '.ceil(($now-$fin_loc)/86400).' jours';}     
             echo "<tr class='text-center'><td>".$donnees['id_location']."</td>
             <td>".$donnees['type_Vehicules']."</td>
@@ -300,7 +300,7 @@
     }
    }   
 
-    function aff_historique() 
+function aff_historique() //Boucle d'affichage des anciennes location pour tous les clients
     {
         $bdd=connect();
         if(isset($_GET['action']) && $_GET['action']=="historique")
@@ -315,9 +315,9 @@
             $recup->bindParam(':client', $client);
             $recup->execute();
             
-            echo '<div class="container my-5">
+            echo '<div class="container my-5" id="histo">
             <h2 class=" text-center py-5"> Historique '.$prenom_client.' '.$nom_client.'</h2>
-            <table class="table">
+            <table class="table" >
                 <thead class="bg_entete_tab">
                     <tr>
                         <th scope="col">Véhicule</th>
@@ -336,7 +336,7 @@
         }
     }
 
-    function aff_historique_client($id_client)
+function aff_historique_client($id_client)//Boucle d'affichage des anciennes location pour un client donnée ($id_client)
     {
         $bdd=connect(); 
             $recup= $bdd->prepare('SELECT clients.id_Clients, Nom_Clients, Prenom_Clients, id_location, date_debut_Louer, date_fin_Louer, retour_Louer, vehicules.id_Vehicules, modele_Vehicules, immatriculation_Vehicules
@@ -366,8 +366,8 @@
          echo'</tbody></table></div>';
         }
     
-function requete_vehicules_dispo()
-{
+function requete_vehicules_dispo() // Requête établissant la liste des véhicules disponibles à la location
+    {
     $bdd=connect();
         $recup= $bdd->query('SELECT id_Vehicules FROM louer WHERE retour_Louer = 0 and louer.date_debut_Louer< now()');
         $id=$recup->fetchAll();
@@ -377,10 +377,10 @@ function requete_vehicules_dispo()
         LEFT JOIN louer ON vehicules.id_Vehicules=louer.id_Vehicules 
         WHERE (vehicules.id_Vehicules NOT IN ('.$id_list.')) GROUP BY vehicules.id_Vehicules');
         return $sql;
-}
+    }
 
 
-    function aff_voitdispo() //voiture disponible
+function aff_voitdispo() //Boucle d'affichage des véhicules disponibles à la location coté administrateur
     {
         $sql=requete_vehicules_dispo();
         while($donnees = $sql->fetch())
@@ -397,7 +397,7 @@ function requete_vehicules_dispo()
         } 
     } 
 
-        function aff_voitdispoFront() 
+function aff_voitdispoFront() // boucle d'affichage des véhicules disponible à la location coté client
         {    
             $sql=requete_vehicules_dispo();
 
@@ -460,24 +460,9 @@ function requete_vehicules_dispo()
                 }
             }      
             }        
-// function date_jour()
-// {
-//     $date=(int(date('j, n, Y')));
-//     return $date;
-// }
-// function NbJours($debut, $fin) {
 
-//     $tDeb = explode("-", $debut);
-//     $tFin = explode("-", $fin);
-
-//     $diff = mktime(0, 0, 0, $tFin[1], $tFin[2], $tFin[0]) - 
-//             mktime(0, 0, 0, $tDeb[1], $tDeb[2], $tDeb[0]);
-    
-//     return(($diff / 86400)+1);
-// }
-
-function liste_déroulante_client()
-{
+function liste_déroulante_client() // menu déroulant affichant les cleint de la base de données
+    {
     $bdd=connect();
     $reponse = $bdd->query('SELECT * FROM clients');
     echo'<select class="custom-select my-2" name="idc">';
@@ -488,7 +473,8 @@ function liste_déroulante_client()
     echo'</select>';
     }
 
-    function liste_déroulante_vehicule(){
+function liste_déroulante_vehicule() //menu déroulant affichant les véhicules disponibles uniquement
+    {
         $reponse = requete_vehicules_dispo();
         echo'<select class="custom-select my-2" name="idv">';
         echo'<option value="NULL">Choisir le véhicule</option>';
@@ -496,9 +482,10 @@ function liste_déroulante_client()
             echo'<option value='.$donnees['id_Vehicules'].'>'.$donnees['id_Vehicules'].' / '.$donnees['type_Vehicules'].' / '.$donnees['modele_Vehicules'].' / '.$donnees['immatriculation_Vehicules'].' </option>';
         }
         echo'</select>';
+    }
 
-        function modifil()
-        {
+function modifil() // Modification des termes de la location (dont retour de location)
+    {
         $bdd=connect();
         if(isset($_GET['action']) && $_GET['action']=="modifier" && !empty($_GET['idc']) && !empty($_GET['idv']) && !empty($_GET['fin']) && !empty($_GET['debut']))
         {
@@ -508,10 +495,7 @@ function liste_déroulante_client()
             else{
                 $valeurretour = "0";
             }
-
-        $message = '';
         $modifierv2 = $bdd->prepare('UPDATE louer SET date_fin_Louer = :date_fin_Louer, retour_Louer = :retour_Louer, date_debut_Louer = :date_debut_Louer WHERE id_location =:idl');
-
         $modifierv2->bindParam(':idl', $_GET['idl'], PDO::PARAM_STR);
         $modifierv2->bindParam(':date_fin_Louer', $_GET['fin'], PDO::PARAM_STR);
         $modifierv2->bindParam(':retour_Louer', $valeurretour, PDO::PARAM_STR);
@@ -532,16 +516,9 @@ function liste_déroulante_client()
         }
         }
         
-        }
+    }        
 
-        function refresh($url)
-        {
-            echo '<script language="Javascript">
-            document.location.replace("'.$url.'");
-            </script>';
-        }
-}
-function aff_voit_en_location() //voiture en cour de location
+function aff_voit_en_location() // Affichage voiture en cours de location
     {
         $bdd=connect();
         
@@ -558,9 +535,9 @@ function aff_voit_en_location() //voiture en cour de location
                 echo '<tr class="text-center"><td>'.$donnees['id_location'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['Nom_Clients'].'</td><td>'.$donnees['date_fin_Louer'].'</td><td>'.$retour.' jours</td></tr>';
             }
        
-            }
+    }
         
-        function aff_voitrouge() //voiture qui n'a pas été rendu
+function aff_voitrouge() // affichage voiture qui n'a pas été rendu
     {
         $bdd=connect();
         
@@ -574,15 +551,15 @@ function aff_voit_en_location() //voiture en cour de location
                 $now=time();
                 $fin_loc=$donnees['date_fin_Louer'];
                 $retard=ceil(($now-strtotime($fin_loc))/86400);
-                echo '<tr class="text-center"><td>'.$donnees['id_location'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['Nom_Clients'].'</td><td>'.$donnees['date_fin_Louer'].'</td><td>'.$retard.' jours</td></tr>';
+                echo '<tr class="text-center"><td>'.$donnees['id_location'].'</td><td>'.$donnees['modele_Vehicules'].'</td><td>'.$donnees['Nom_Clients'].'</td><td>'.$donnees['date_fin_Louer'].'</td><td>'.$retard.' jour(s)</td></tr>';
             }
        
-            }
- function detailclient($idclient)
+    }
+
+function detailclient($idclient) //récupération données client à partir de l'ID
  {
     $bdd=connect();
     $recuperation = $bdd->query('SELECT * FROM clients where clients.id_Clients='.$idclient.'');
-    // $recuperation->debugDumpParams();
     $client = $recuperation->fetch();
 
     return $client;

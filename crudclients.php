@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div class="container py-5">
+    <div class="container py-5" id="CRUD_client">
                    <table class="table table-hover table-sm">
                 <thead class="bg_entete_tab text-center">
                     <tr>
@@ -36,9 +36,9 @@
                         <th scope="col" style="width:20%">Adresse</th>
                         <th scope="col" style="width:10%">CP</th>
                         <th scope="col" style="width:15%">Ville</th>
-                        <th>&nbsp;</th>
-                        <th>&nbsp;</th>
-                        <th>&nbsp;</th>
+                        <th scope="col" >&nbsp;</th>
+                        <th scope="col" >&nbsp;</th>
+                        <th scope="col" >&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>

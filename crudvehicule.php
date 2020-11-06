@@ -37,7 +37,7 @@
             </div>
         </div>
     </div>
-    <div class="container py-5">
+    <div class="container py-5" id="CRUD_vehicule">
         
             <table class="table table-hover table-sm">
                 <thead class="bg_entete_tab text-center">
@@ -46,8 +46,8 @@
                         <th scope="col" style="width:20%">Type de Véhicule</th>
                         <th scope="col" style="width:20%">Modèle Véhicule</th>
                         <th scope="col" style="width:20%">Immatriculation</th>
-                        <th>&nbsp;</th>
-                        <th>&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
