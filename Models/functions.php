@@ -63,7 +63,7 @@ function ajouterc() //fonction ajout d'un client
                 }
     }
     }
-function ajouter_client($url)
+function ajouter_client($url)//fonction ajout des informations client par le client 
     {
         $bdd=connect();
         if(isset($_GET['ajouter']) && !empty($_GET['nom'])  && !empty($_GET['prenom'])  && !empty($_GET['adresse']) && !empty($_GET['cp']) && !empty($_GET['ville'])) {
