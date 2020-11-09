@@ -33,12 +33,14 @@ $bdd=connect();
 
 
 if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['button'])){
-        header('location: inscrition_client.php');
+        header('location: inscrition_client.php?'.SID);
         exit;
         } 
-
+$titrepage='Création compte';
+require 'header_client.php'; 
 ?>
 <h1>Vous compte a été créer</h1>
+<?php var_dump($_SESSION); ?>
 <form action="" method="post">
 <button type="submit" name="button" value="button" class="btn btn-secondary">Continuer</button>
 </form>

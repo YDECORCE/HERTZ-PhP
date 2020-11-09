@@ -1,3 +1,7 @@
+<?php 
+session_start();
+$id_session = session_id();
+ ?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -22,6 +26,7 @@
 </head>
 
 <body>
+<?php echo $id_session;?>
   <nav class="navbar navbar-expand-lg navbar-light trait">
     <a class="navbar-brand" href="index.php"><img src="Img/hertz-logo-black.png" alt="logo"> </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"

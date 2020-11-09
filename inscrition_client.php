@@ -1,7 +1,8 @@
    <?php
     $titrepage='Création compte';
     require 'header_client.php';
-   require ('Models/functions.php');
+    require ('Models/functions.php');
+    var_dump($_SESSION);
    ?>
 
    <div class="container-fluid bg">
@@ -12,6 +13,7 @@
                <div class="col-12 col-lg-8 d-flex justify-content-center w-100" style="flex-wrap:wrap">
                    <form class="w-100" name="ajoutclient" method="get" action="login.php">
                        <div class="form-group">
+                            <input type="text" hidden name="id" value=<?php echo $_SESSION['identifiant'] ?>/>
                            <input type="text my-5" placeholder="Nom" name="nom" class="form-control"></input><br />
                            <input type="text my-5" placeholder="Prénom" name="prenom"
                                class="form-control"></input><br />
@@ -29,7 +31,7 @@
        </div>
    </div>
    <?php
-ajouterc('login.php');
+ajouter_client('login.php');
 ?>
    </div>
    <?php
